@@ -12,6 +12,12 @@
  
  </insert>
  
+ <select id="login" parameterType="MemberDTO" resultType="MemberDTO">
+ SELECT * FROM "COOK_MEMBER"
+ WHERE "USERNAME"=#{username}
+ 
+ 
+ </select>
  
  
  

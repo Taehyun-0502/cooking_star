@@ -24,7 +24,19 @@ public class MemberController {
 		
 		memberService.join(memberDTO);
 		
-		return "/";
+		return "redirect:/";
+	}
+	@GetMapping("login")
+	public void login() throws Exception{
+		
+	}
+	@PostMapping
+	public String login(MemberDTO memberDTO)throws Exception{
+		
+		memberService.login(memberDTO);
+		
+		
+		return "redirect:/";
 	}
 	
 	
