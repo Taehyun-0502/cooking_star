@@ -12,13 +12,11 @@ public class MemberDTO {
 	private String username;
 	private String password;
 	private String name;
-	private String follower;
-	private String following;
 	private String email;
 	private boolean enabled;
 	private boolean credentialsNonExpired;
 	private boolean accountNonLocked;
 	private boolean accountNonExpired;
-	
+	private ProfileDTO profileDTO;
 	
 }
