@@ -22,6 +22,8 @@ public class MemberService implements UserDetailsService{
 		
 		memberDTO.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
 		
+		
+		
 		return memberMapper.join(memberDTO);
 		
 		

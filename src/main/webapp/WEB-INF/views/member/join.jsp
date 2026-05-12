@@ -33,7 +33,16 @@
 				<input type="email" name="email" id="email">
 			</div>
 			
+			<div class="form-group">
+				<label for="file">profile</label>
+				<input type="file" class="form-control-file" id="attach"name="attach">
+			</div>
+			
+			
+			
 			<button type="submit" >회원 가입</button>
+			
+			
 			
 			</form>
 
