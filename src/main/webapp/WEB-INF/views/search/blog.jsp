@@ -7,6 +7,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+
 		<h1>blog list</h1>
+		
+		
+	
 </body>
 </html>
