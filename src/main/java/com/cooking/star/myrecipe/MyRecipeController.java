@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cooking.star.pager.Pager;
 
@@ -22,9 +24,9 @@ public class MyRecipeController {
 	public void create() throws Exception{}
 	
 	@PostMapping("create")
-	public String create(MyRecipeDTO myRecipeDTO)throws Exception{
+	public String create(MyRecipeDTO myRecipeDTO,@RequestParam(name =  "attach", required = false) MultipartFile attach)throws Exception{
 		
-		int result=myRecipeService.create(myRecipeDTO);
+		int result=myRecipeService.create(myRecipeDTO,attach);
 		return "redirect:/myrecipe/list";
 	}
 	@GetMapping("list")

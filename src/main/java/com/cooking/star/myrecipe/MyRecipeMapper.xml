@@ -25,6 +25,11 @@
 		(DEFAULT,#{username},#{recipeTitle},#{recipeContents},#{recipeGood},#{recipeHit},now())
 	</insert>
 
+	<insert id="addRecipeimg" parameterType="RecipeFileDTO">
+	INSERT INTO "RECIPE_FILE"
+	VALUES (DEFAULT,#{recipeNum},#{fileName},#{oriName})
+	</insert>
+	
 	<select id="list" parameterType="Pager" resultType="MyRecipeDTO">
 		SELECT * FROM "COOK_MYRECIPE"
 		<include refid="search_sql"></include>

@@ -1,30 +1,10 @@
-const recipebtn=document.getElementById("recipebtn")
-const recipesearch=document.getElementById("recipesearch")
+const recipebtn = document.getElementById("recipebtn");
+const recipesearch = document.getElementById("recipesearch");
 
-recipebtn.addEventListener("click",()=>{
-
-    let s=recipesearch.value
-
-    let query=new FormData()
-
-    query.append("query",s)
-
-
-    console.log(query.get("query"))
-
-
-
-    fetch("http://localhost/search/blog",{
-        method:"POST",
-        body:query
-    })
-    .then(r=>r.json())
-    .then(r=>{
-        const items=r.items
-        for(let i = 0 ; i<items.length;i++){
-            let item=r.items[i]
-            console.log(item.link)
-            console.log(item.title)
-        }
-    })
-})
+// 폼 자체가 전송될 때 체크하고 싶다면 form에 이벤트를 겁니다.
+document.querySelector("form").addEventListener("submit", (e) => {
+    if (recipesearch.value.trim() === "") {
+        alert("검색어를 입력해주세요!");
+        e.preventDefault(); // 검색어가 없으면 페이지 이동을 막음
+    }
+});
