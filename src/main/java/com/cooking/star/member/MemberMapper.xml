@@ -12,13 +12,55 @@
  
  </insert>
  
- <select id="login" parameterType="MemberDTO" resultType="MemberDTO">
- SELECT * FROM "COOK_MEMBER"
- WHERE "USERNAME"=#{username}
+ <select id="login" parameterType="MemberDTO" resultMap="loginResult">
+ select * from "COOK_MEMBER" m
+LEFT JOIN "COOK_PROFILE" p 
+USING ("USERNAME")
+INNER JOIN "COOK_MEMBER_ROLE"
+USING ("USERNAME")
+INNER JOIN "COOK_ROLE"
+USING ("ROLE_NUM")
+WHERE "USERNAME"=#{username}
  
  
  </select>
+
+	<resultMap type="MemberDTO" id="loginResult">
+		<id column="USERNAME" property="username" />
+		<result column="PASSWORD" property="password" />
+		<result column="NAME" property="name" />
+		<result column="EMAIL" property="email" />
+		<result column="ENABLED" property="enabled" />
+		<result column="CREDENTIALS_NON_EXPIRED" property="credentialsNonExpired" />
+		<result column="ACCOUNT_NON_LOCKED" property="accountNonLocked" />
+		<result column="ACCOUNT_NON_EXPIRED" property="accountNonExpired" />
+	
+	<association property="profileDTO" javaType="ProfileDTO">
+		<id column="FILE_NUM" property="fileNum"/>
+		<result column="FILE_NAME" property="fileName"/>
+		<result column="ORI_NAME" property="oriName"/>
+		<result column="USERNAME" property="username"/>
+	</association>
+	
+	<collection property="roles" javaType="java.util.List" ofType="RoleDTO">
+		<id column="ROLE_NUM" property="roleNum"/>
+		<result column="ROLE_NAME" property="roleName"/>
+	
+	</collection>
+	
+
+
+
+	</resultMap>
  
+ 
+ 
+ <insert id="addProfile" parameterType="ProfileDTO">
+ INSERT INTO "COOK_PROFILE" ("FILE_NAME","ORI_NAME","USERNAME")
+ VALUES (#{fileName},#{oriName},#{username})
+ 
+ 
+ </insert>
  
  
  

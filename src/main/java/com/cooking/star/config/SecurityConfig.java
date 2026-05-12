@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.cooking.star.member.MemberService;
 import com.cooking.star.security.AddLogout;
 import com.cooking.star.security.AddLogoutHandler;
 import com.cooking.star.security.LoginFailHandler;
@@ -28,11 +29,18 @@ public class SecurityConfig {
 	
 	@Autowired
 	private AddLogoutHandler logoutHandler;
+	@Autowired
+	private MemberService memberService;
 	
 	@Bean
 	WebSecurityCustomizer customizer() {
 		return web->{
-			web.ignoring();
+			web.ignoring()
+			.requestMatchers("/css/**")
+			.requestMatchers("images/**","/img/**","/js/**")
+			.requestMatchers("/lib/**")
+			.requestMatchers("/scss/**")
+			;
 			
 		};
 		
@@ -68,6 +76,15 @@ public class SecurityConfig {
 			.deleteCookies("JSESSIONID")
 			.addLogoutHandler(addLogout)
 			.logoutSuccessHandler(logoutHandler);
+			
+		})
+		.rememberMe(remember->{
+			remember.rememberMeParameter("rememberMe")
+			.key("rememberKey")
+			.tokenValiditySeconds(60*60*24)
+			.userDetailsService(memberService)
+			.authenticationSuccessHandler(loginSuccessHandler)
+			.useSecureCookie(true);
 			
 		});
 		

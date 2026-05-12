@@ -17,7 +17,7 @@ public class PasswordConfig {
 		
 		return new BCryptPasswordEncoder();
 	}
-	
+	@Bean
 	HttpSessionEventPublisher sessionEventPublisher() {
 		
 		return new HttpSessionEventPublisher();

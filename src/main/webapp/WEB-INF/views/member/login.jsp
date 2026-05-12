@@ -13,7 +13,7 @@
 			
 				<div>
 					<label>아이디</label>
-					<input type="text" name="username" id="username" value="${cookie.rememberId.value}" />
+					<input type="text" name="username" id="username"  />
 					
 				</div>
 				<div>
@@ -24,6 +24,10 @@
 				<div>
 					<label>id 저장하기</label>
 					<input type="checkbox" name="rememberId" value="1" id="rememberId" >
+				</div>
+				<div >
+				<input type="checkbox" name="rememberMe" id="exampleCheck1"> 
+				<label class="form-check-label"	for="exampleCheck1">로그인 유지</label>
 				</div>
 			<button type="submit">로그인</button>
 			
