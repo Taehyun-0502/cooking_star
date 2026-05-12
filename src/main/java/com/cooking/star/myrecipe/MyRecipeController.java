@@ -27,6 +27,7 @@ public class MyRecipeController {
 	public String create(MyRecipeDTO myRecipeDTO,@RequestParam(name =  "attach", required = false) MultipartFile attach)throws Exception{
 		
 		int result=myRecipeService.create(myRecipeDTO,attach);
+		
 		return "redirect:/myrecipe/list";
 	}
 	@GetMapping("list")

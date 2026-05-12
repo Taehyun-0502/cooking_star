@@ -34,6 +34,7 @@ public class FileManager {
 		//확장자
 		fileName=fileName+"_"+mf.getOriginalFilename();
 		file=new File(file,fileName);
+		
 		//저장
 		mf.transferTo(file);
 		

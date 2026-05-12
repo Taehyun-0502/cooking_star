@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Recipe 작성</h1>
-	<form action="/myrecipe/create" method="post">
+	<form action="/myrecipe/create" method="post" enctype="multipart/form-data">
 		<div>
 			아이디<input type="text" name="username">
 		</div>
@@ -26,7 +26,7 @@
 		</div>
 		<div class="form-group">
 			<label>요리 사진</label> <input type="file" name="attach"
-				class="form-control">
+				class="form-control" id="attach">
 		</div>
 		<button type="submit">저장</button>
 	</form>

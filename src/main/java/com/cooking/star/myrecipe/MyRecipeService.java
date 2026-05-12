@@ -11,7 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cooking.star.file.FileManager;
 import com.cooking.star.pager.Pager;
+
+import lombok.extern.slf4j.Slf4j;
 @Service
+@Slf4j
 public class MyRecipeService {
 	
 	@Value("${app.myrecipe}")
@@ -29,14 +32,15 @@ public class MyRecipeService {
 		
 		
 		int result=myRecipeMapper.create(myRecipeDTO);
-		if(attach !=null && !attach.isEmpty()) {
+		
+		if(attach != null && !attach.isEmpty()) {
 			String fileName=fileManager.fileSave(name, attach);
-			
 			RecipeFileDTO recipeFileDTO=new RecipeFileDTO();
 			recipeFileDTO.setFileName(fileName);
 			recipeFileDTO.setOriName(attach.getOriginalFilename());
+			
 			recipeFileDTO.setRecipeNum(myRecipeDTO.getRecipeNum());
-			result=myRecipeMapper.addRecipeimg(recipeFileDTO);
+			myRecipeMapper.addRecipeimg(recipeFileDTO);
 			
 		}
 		return result;

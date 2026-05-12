@@ -19,7 +19,7 @@
 		<include refid="search_sql"></include>
 	</select>
 
-	<insert id="create" parameterType="MyRecipeDTO">
+	<insert id="create" parameterType="MyRecipeDTO" keyProperty="recipeNum" useGeneratedKeys="true">
 		INSERT INTO "COOK_MYRECIPE"
 		VALUES
 		(DEFAULT,#{username},#{recipeTitle},#{recipeContents},#{recipeGood},#{recipeHit},now())
