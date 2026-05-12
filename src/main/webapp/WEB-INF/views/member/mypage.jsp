@@ -32,7 +32,10 @@
 				
 			
 			</table>
-		
+			<a href="/member/update">
+			<button type="button">정보 수정</button>
+			
+			</a>
 		
 		</div>
 		

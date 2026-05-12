@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/member/*")
+@Slf4j
 public class MemberController {
 
 	@Autowired
@@ -62,7 +65,23 @@ public class MemberController {
 		
 		
 	}
-	
+	@GetMapping("update")
+	public void update(MemberDTO memberDTO,Principal principal, Model model)throws Exception{
+
+	    String username = principal.getName();
+
+	    MemberDTO m = new MemberDTO();
+	    memberDTO.setUsername(username);
+
+	    MemberDTO myInfo = memberService.myProfile(memberDTO);
+
+	   
+	    
+	    
+	    model.addAttribute("memberDTO", myInfo);
+
+	   
+	}
 	
 	
 	
