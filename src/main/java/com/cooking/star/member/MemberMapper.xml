@@ -12,7 +12,7 @@
  
  </insert>
  
- <select id="login" parameterType="MemberDTO" resultMap="loginResult">
+ <select id="login" parameterType="MemberDTO" resultMap="loginResult" >
  select * from "COOK_MEMBER" m
 LEFT JOIN "COOK_PROFILE" p 
 USING ("USERNAME")

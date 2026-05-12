@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Recipe 작성</h1>
-	<form action="/myrecipe/create" method="post">
+	<form action="/myrecipe/create" method="post" enctype="multipart/form-data">
 		<div>
 			아이디<input type="text" name="username">
 		</div>
