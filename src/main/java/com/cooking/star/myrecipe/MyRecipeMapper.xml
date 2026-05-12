@@ -54,4 +54,18 @@
 	</association>
 	</resultMap>
 	
+	<select id="myList" parameterType="MyRecipeDTO" resultMap="recipeResult">
+	SELECT * FROM "COOK_MYRECIPE"m
+	LEFT JOIN
+	"RECIPE_FILE"f
+	USING("RECIPE_NUM")
+	WHERE "USERNAME"=${username}
+	</select>
+	<select id="detail" parameterType="MyRecipeDTO" resultMap="recipeResult">
+	SELECT * FROM "COOK_MYRECIPE"m
+	LEFT JOIN
+	"RECIPE_FILE"f
+	USING("RECIPE_NUM")
+	WHERE "RECIPE_NUM"=${recipeNum}
+	</select>
 </mapper>
