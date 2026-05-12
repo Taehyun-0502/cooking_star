@@ -19,14 +19,19 @@ public class MemberController {
 	
 	
 	@GetMapping("join")
-	public void join()throws Exception {
+	public void join(MemberDTO memberDTO)throws Exception {
 		
 		
 	}
 	@PostMapping("join")
 	public String join(@Validated(GroupAdd.class) MemberDTO memberDTO,BindingResult bindingResult,@RequestParam(name="attach",required = false) MultipartFile attach)throws Exception{
+		if(memberService.doubleCheck(memberDTO, bindingResult)) {
+			
+			return "member/join";
+			
+		}
 		
-		memberService.join(memberDTO);
+		int result=memberService.join(memberDTO,attach);
 		
 		return "redirect:/";
 	}
@@ -34,14 +39,14 @@ public class MemberController {
 	public void login() throws Exception{
 		
 	}
-	@PostMapping
-	public String login(MemberDTO memberDTO)throws Exception{
-		
-		memberService.login(memberDTO);
-		
-		
-		return "redirect:/";
-	}
+//	@PostMapping
+//	public String login(MemberDTO memberDTO)throws Exception{
+//		
+//		memberService.login(memberDTO);
+//		
+//		
+//		return "redirect:/";
+//	}
 	
 	
 	

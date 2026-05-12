@@ -10,4 +10,8 @@ public interface MemberMapper {
 	
 	public MemberDTO login(MemberDTO memberDTO)throws UsernameNotFoundException;
 	
+	public int addProfile(ProfileDTO profileDTO)throws Exception;
+	
+	
+	
 }
