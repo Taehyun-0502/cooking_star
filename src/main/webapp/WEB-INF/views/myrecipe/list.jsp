@@ -43,7 +43,7 @@
 
 							<tr>
 								<td>${d.recipeNum}</td>
-								<td>${d.recipeTitle}</td>
+								<td><a href="/myrecipe/detail?recipeNum=${d.recipeNum}">${d.recipeTitle}</a></td>
 								<td>${d.username}</td>
 								<td>${d.recipeGood}</td>
 								<td>${d.recipeHit}</td>

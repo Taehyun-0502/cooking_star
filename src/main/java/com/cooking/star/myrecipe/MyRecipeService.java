@@ -1,6 +1,5 @@
 package com.cooking.star.myrecipe;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,44 +12,46 @@ import com.cooking.star.file.FileManager;
 import com.cooking.star.pager.Pager;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Service
 @Slf4j
 public class MyRecipeService {
-	
+
 	@Value("${app.myrecipe}")
 	private String name;
 
 	@Autowired
 	private MyRecipeMapper myRecipeMapper;
-	
+
 	@Autowired
 	private FileManager fileManager;
-	
-	
-	
-	public int create(MyRecipeDTO myRecipeDTO,MultipartFile attach) throws Exception{
-		
-		
-		int result=myRecipeMapper.create(myRecipeDTO);
-		
-		if(attach != null && !attach.isEmpty()) {
-			String fileName=fileManager.fileSave(name, attach);
-			RecipeFileDTO recipeFileDTO=new RecipeFileDTO();
+
+	public int create(MyRecipeDTO myRecipeDTO, MultipartFile attach) throws Exception {
+
+		int result = myRecipeMapper.create(myRecipeDTO);
+
+		if (attach != null && !attach.isEmpty()) {
+			String fileName = fileManager.fileSave(name, attach);
+			RecipeFileDTO recipeFileDTO = new RecipeFileDTO();
 			recipeFileDTO.setFileName(fileName);
 			recipeFileDTO.setOriName(attach.getOriginalFilename());
-			
+
 			recipeFileDTO.setRecipeNum(myRecipeDTO.getRecipeNum());
 			myRecipeMapper.addRecipeimg(recipeFileDTO);
-			
+
 		}
 		return result;
 	}
-	public List<MyRecipeDTO> list(Pager pager) throws Exception{
-		
+
+	public List<MyRecipeDTO> list(Pager pager) throws Exception {
+
 		pager.makeStartNum();
-		
+
 		pager.makeBlock(myRecipeMapper.getCount(pager));
 		return myRecipeMapper.list(pager);
 	}
-	
+
+	public List<MyRecipeDTO> detail(MyRecipeDTO myRecipeDTO)throws Exception{
+		return myRecipeMapper.detail(myRecipeDTO);
+	}
 }
