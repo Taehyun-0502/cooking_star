@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.cooking.star.follow.FollowMapper">
+  
+  <insert id="follow" parameterType="FollowDTO">
+  INSERT INTO "COOK_FOLLOW"
+  VALUES (default,#{followerUser},#{followingUser})
+  
+  
+  </insert>
+  
+  <select id="check" parameterType="FollowDTO" resultType="int">
+   SELECT COUNT(*)
+    FROM "COOK_FOLLOW"
+    WHERE "FOLLOWER_USER" = #{followerUser}
+    AND "FOLLOWING_USER" = #{followingUser}
+  
+  </select>
+  
+  <delete id="unFollow" parameterType="FollowDTO">
+  
+  DELETE FROM "COOK_FOLLOW"
+   WHERE "FOLLOWER_USER" = #{followerUser}
+    AND "FOLLOWING_USER" = #{followingUser}
+  </delete>
+  
+  
+  
+  </mapper>

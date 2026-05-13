@@ -16,4 +16,6 @@ public interface MyRecipeMapper {
 	public int addRecipeimg(RecipeFileDTO recipeFileDTO);
 	public int update(MyRecipeDTO myRecipeDTO,MultipartFile attach);
 
+	//디테일 조회시 조회수 증가 메서드
+	public int updateHit(MyRecipeDTO myRecipeDTO) throws Exception;
 }

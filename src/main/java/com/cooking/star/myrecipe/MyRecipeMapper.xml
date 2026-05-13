@@ -33,6 +33,7 @@
 	<select id="allList" parameterType="Pager" resultType="MyRecipeDTO">
 		SELECT * FROM "COOK_MYRECIPE"
 		<include refid="search_sql"></include>
+		ORDER BY "RECIPE_NUM" DESC
 		LIMIT #{perPage} OFFSET #{startNum}
 	</select>
 	
@@ -78,4 +79,19 @@
 	</set>
 	WHERE "RECIPE_NUM"=#{recipeNum}
 	</update>
+	
+	
+	<update id="updateHit">
+    UPDATE "COOK_MYRECIPE"
+    SET "RECIPE_HIT" = "RECIPE_HIT" + 1
+    WHERE "RECIPE_NUM" = #{recipeNum}
+</update>
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

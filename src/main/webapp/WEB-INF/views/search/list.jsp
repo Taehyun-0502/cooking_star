@@ -21,10 +21,11 @@
 						<c:forEach items="${list}" var="d">
 			<tr>
 				
-					
-							<td><h3>${d.searchTitle}</h3></td>
-							<td><a href="${d.link}" target="_blank" rel="noopener noreferrer"> ${d.link}</a></td>
-							<td><button type="button" class="linkBtn" data-num="${d.searchNum}">삭제</button></td>
+							<div class="resultDiv" data-div="${d.searchNum}">							
+								<td><h3>${d.searchTitle}</h3></td>
+								<td><a href="${d.link}" target="_blank" rel="noopener noreferrer"> ${d.link}</a></td>
+								<td><button type="button" class="linkBtn" data-num="${d.searchNum}">삭제</button></td>
+							</div>
 
 					
 							

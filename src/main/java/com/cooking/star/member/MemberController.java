@@ -1,17 +1,24 @@
 package com.cooking.star.member;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.cooking.star.follow.FollowDTO;
+import com.cooking.star.follow.FollowService;
+import com.cooking.star.myrecipe.MyRecipeDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +30,15 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private FollowService followService;
+
+	@Value("${app.profile}")
+	private String name;
+	@ModelAttribute("name")
+	public String getName() {
+		return this.name;
+	}
 	
 	@GetMapping("join")
 	public void join(MemberDTO memberDTO)throws Exception {
@@ -55,14 +71,19 @@ public class MemberController {
 //	}
 	@GetMapping("mypage")
 	public void mypage(Principal principal,Model model)throws Exception {
-		
+		String username = principal.getName();
 		MemberDTO memberDTO = new MemberDTO();
 			memberDTO.setUsername(principal.getName());
 		MemberDTO m=memberService.myProfile(memberDTO);
+		// 로그인 한 사람을 팔로일 한 수
+		int follower= memberService.followerCount(username);
+		
+		// 로그인 한 사람이 팔로잉 한 수 
+		int following=memberService.followingCount(username);
 		
 		model.addAttribute("myProfile",m);
-		
-		
+		model.addAttribute("follower", follower);
+		model.addAttribute("following", following);
 		
 	}
 	@GetMapping("update")
@@ -89,6 +110,54 @@ public class MemberController {
 		
 		return "redirect:/member/mypage";
 	}
+	@GetMapping("user")
+	public void user(MemberDTO memberDTO,Model model, Principal principal)throws Exception {
+		
+		
+		List<MyRecipeDTO>ar =memberService.user(memberDTO);
+		
+		String targetuser=memberDTO.getUsername();
+		
+		
+		model.addAttribute("targetuser", targetuser);
+		model.addAttribute("list", ar);
+		
+		if(principal != null) {
+			 String loginUser = principal.getName();
+
+		        FollowDTO followDTO = new FollowDTO();
+		        followDTO.setFollowerUser(loginUser);      // 현재 로그인한 사람
+		        followDTO.setFollowingUser(targetuser);    // 레시피 작성자
+
+		        int isFollow = followService.check(followDTO);
+
+		        model.addAttribute("isFollow", isFollow);
+		        model.addAttribute("loginUser", loginUser);
+			
+			
+		}
+		
+		
+	}
+	@GetMapping("follower")
+	public void followerList(Principal principal,Model model)throws Exception {
+		String username =principal.getName();
+		List<FollowDTO> ar=memberService.followerList(username);
+		model.addAttribute("follower",ar);
+		
+	}
+	
+	
+	@GetMapping("following")
+	public void followingList(Principal principal,Model model) throws Exception{
+		String username = principal.getName();
+		List<FollowDTO> ar = memberService.followingList(username);
+		model.addAttribute("following", ar);
+		
+		
+	}
+	
+	
 	
 	
 	

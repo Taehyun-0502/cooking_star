@@ -44,7 +44,7 @@ public class MyRecipeController {
 		myRecipeDTO.setUsername(memberDTO.getUsername());
 		int result=myRecipeService.create(myRecipeDTO,attach);
 		
-		return "redirect:/myrecipe/list";
+		return "redirect:/myrecipe/allList";
 	}
 	@GetMapping("allList")
 	public void allList(Pager pager,Model model)throws Exception{
@@ -55,6 +55,7 @@ public class MyRecipeController {
 	
 	@GetMapping("detail")
 	public void detail(MyRecipeDTO myRecipeDTO,Model model)throws Exception{
+		myRecipeService.updateHit(myRecipeDTO);
 		myRecipeDTO=myRecipeService.detail(myRecipeDTO);
 		model.addAttribute("dto",myRecipeDTO);
 		

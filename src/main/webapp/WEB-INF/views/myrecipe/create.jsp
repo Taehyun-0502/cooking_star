@@ -13,7 +13,7 @@
 	
 	
 	
-	<form action="/myrecipe/create" method="post" enctype="MyRecipeDTO">
+	<form action="/myrecipe/create" method="post" enctype="multipart/form-data">
 		<div>
 			아이디<input type="text" readonly value="<sec:authentication property='principal.username'/>" name="username">
 		</div>

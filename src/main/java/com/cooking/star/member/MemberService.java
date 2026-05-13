@@ -1,7 +1,10 @@
 package com.cooking.star.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,12 +14,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cooking.star.file.FileManager;
+import com.cooking.star.follow.FollowDTO;
+import com.cooking.star.myrecipe.MyRecipeDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 public class MemberService implements UserDetailsService{
+
+    
 
 	@Autowired
 	private MemberMapper memberMapper;
@@ -26,6 +33,9 @@ public class MemberService implements UserDetailsService{
 	private FileManager fileManager;
 	@Value("${app.profile}")
 	private String name;
+
+
+   
 	
 	
 	public MemberDTO myProfile(MemberDTO memberDTO)throws Exception {
@@ -119,7 +129,32 @@ public class MemberService implements UserDetailsService{
 		return result;
 	}
 	
-	
-	
+	public List<MyRecipeDTO>user(MemberDTO memberDTO)throws Exception{
+		
+		List<MyRecipeDTO>ar=memberMapper.user(memberDTO);
+		
+		return ar;
+	}
+	//로그인한 사람이 팔로잉 하는 사람의 리스트
+	public List<FollowDTO>followingList(String username)throws Exception{
+		
+		return memberMapper.followingList(username);
+		
+	}
+	//로그인한 사람을 팔로잉 하는 사람의 리스트
+	public List<FollowDTO>followerList(String username)throws Exception{
+		
+		return memberMapper.followerList(username);
+	}
+	//로그인 한 사람을 팔로잉 한 수 
+	public int followerCount(String username)throws Exception{
+		
+		return memberMapper.followerCount(username);
+	}
+	//로그인 한 사람이 팔로우 한 수 
+	public int followingCount(String username)throws Exception{
+		
+		return memberMapper.followingCount(username);
+	}
 	
 }

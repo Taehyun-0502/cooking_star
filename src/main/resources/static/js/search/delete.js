@@ -24,6 +24,8 @@ for(let d of listBtn){
 			if(r>0){
 				alert("삭제 성공")
 				/* 리다이렉트 또는 ajax를 이용해서 리스트 다시보기*/
+				
+				d.parentElement.parentElement.remove();
 			}
 		})
 		

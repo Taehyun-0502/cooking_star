@@ -81,10 +81,67 @@ WHERE "USERNAME"=#{username}
  </update>
  
  
+ <select id="user" parameterType="MemberDTO" resultType="MyRecipeDTO">
  
+ SELECT * FROM "COOK_MEMBER" m 
+ LEFT JOIN "COOK_MYRECIPE" r
+USING ("USERNAME")
+WHERE "USERNAME"=#{username} 
  
+ </select>
  
+ <resultMap type="MemberDTO" id="userResult" >
  
+ <id column="USERNAME" property="username" />
+		<result column="PASSWORD" property="password" />
+		<result column="NAME" property="name" />
+		<result column="EMAIL" property="email" />
+		<result column="ENABLED" property="enabled" />
+		<result column="CREDENTIALS_NON_EXPIRED" property="credentialsNonExpired" />
+		<result column="ACCOUNT_NON_LOCKED" property="accountNonLocked" />
+		<result column="ACCOUNT_NON_EXPIRED" property="accountNonExpired" />
+ 
+ <collection property="myRecipeList" javaType="java.util.List" ofType="MyRecipeDTO">
+ 
+ 	<id column="RECIPE_NUM" property="recipeNum"/>
+	<result column="USERNAME" property="username"/>
+	<result column="RECIPE_TITLE" property="recipeTitle"/>
+	<result column="RECIPE_CONTENTS" property="recipeContents"/>
+	<result column="RECIPE_GOOD" property="recipeGood"/>
+	<result column="RECIPE_HIT" property="recipeHit"/>
+	<result column="RECIPE_DATE" property="recipeDate"/>
+ 
+ </collection>
+ </resultMap>
+ 
+ <!-- 내가(로그인한 유저) 팔로잉 하고 있는 유저 리스트  -->
+ <select id="followingList" parameterType="String" resultType="FollowDTO">
+   SELECT
+        "FOLLOWING_USER",
+        "FOLLOWER_USER"
+    FROM "COOK_FOLLOW"
+    WHERE "FOLLOWER_USER" = #{username}
+ </select>
+ <!-- 나를(로그인한 유저) 팔로잉 하는 유저 리스트-->
+ <select id="followerList" parameterType="String" resultType="FollowDTO">
+     SELECT
+        "FOLLOWING_USER",
+        "FOLLOWER_USER"
+    FROM "COOK_FOLLOW"
+    WHERE "FOLLOWING_USER" = #{username}
+</select>
+<!--  로그인한 사람을 팔로잉 한 사람 수 -->
+ <select id="followerCount" parameterType="String" resultType="int">
+    SELECT COUNT(*)
+    FROM "COOK_FOLLOW"
+    WHERE "FOLLOWING_USER" = #{username}
+</select>
+<!--로그인한 사람이 팔로잉 한 사람 수  -->
+ <select id="followingCount" parameterType="String" resultType="int">
+    SELECT COUNT(*)
+    FROM "COOK_FOLLOW"
+    WHERE "FOLLOWER_USER" = #{username}
+</select>
  
  
  </mapper>

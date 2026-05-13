@@ -58,4 +58,10 @@ public class MyRecipeService {
 	public int update(MyRecipeDTO myRecipeDTO,MultipartFile attach)throws Exception{
 		return myRecipeMapper.update(myRecipeDTO,attach);
 	}
+	
+	public int updateHit(MyRecipeDTO myRecipeDTO)throws Exception{
+		
+		return myRecipeMapper.updateHit(myRecipeDTO);
+	}
+	
 }

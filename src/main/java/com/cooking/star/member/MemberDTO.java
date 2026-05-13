@@ -8,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.cooking.star.myrecipe.MyRecipeDTO;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -46,6 +48,7 @@ public class MemberDTO implements UserDetails{
 	
 	private List<RoleDTO> roles;
 	
+	private List<MyRecipeDTO> myRecipeList;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

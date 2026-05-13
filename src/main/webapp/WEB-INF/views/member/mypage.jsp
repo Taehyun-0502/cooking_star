@@ -10,7 +10,9 @@
 <body>
 
 		<h1>MY PAGE</h1>
-		
+		<div>
+		<img alt="" src="/files/${name}/${myProfile.profileDTO.fileName}">
+		</div>
 		
 		<div>
 			<table>
@@ -18,6 +20,8 @@
 					<tr>
 						<th>이름</th>
 						<th>이메일</th>
+						<th>팔로워</th>
+						<th>팔로잉</th>
 					</tr>
 				</thead>
 				
@@ -26,6 +30,8 @@
 					<tr>
 						<td>${myProfile.name}</td>
 						<td>${myProfile.email}</td>
+						<td><a href="/member/follower">${follower}</a></td>
+						<td><a href="/member/following">${following}</a></td>
 					</tr>
 				
 				</tbody>
