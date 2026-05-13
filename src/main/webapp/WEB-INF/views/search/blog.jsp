@@ -20,7 +20,7 @@
         <!-- 컨트롤러에서 보낸 searchQuery를 data-query 속성에 저장합니다. -->
         <div id="recipeResult" class="row g-4" data-query="${searchQuery}">
             <div class="text-center py-5">
-                <div class="spinner-border text-primary" role="status"></div>
+                <div class="spinner-border text-primary" role="status"> </div>
                 
             </div>
         </div>

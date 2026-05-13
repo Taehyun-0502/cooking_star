@@ -11,7 +11,20 @@
   
   </insert>
   
+  <select id="list" parameterType="SearchDTO" resultType="SearchDTO">
   
+  SELECT * FROM "COOK_SEARCH"
+  WHERE "USERNAME"=#{username}
+  
+  
+  </select>
+  
+  <delete id="delete" parameterType="SearchDTO">
+  
+  DELETE FROM "COOK_SEARCH"
+  WHERE "SEARCH_NUM"=#{searchNum}
+  AND "USERNAME"=#{username}
+  </delete>
   
   
   

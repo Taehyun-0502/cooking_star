@@ -11,7 +11,14 @@
 	
 		<h1>수정 폼</h1>
 			<form:form method="post" enctype="multipart/form-data" modelAttribute="memberDTO">
-			
+				
+				<div>
+					
+					<form:hidden  path="username" id="username" />
+					
+				</div>		
+
+
 				<div>
 					<label>name</label>
 					<form:input path="name" id="name" />
@@ -24,7 +31,7 @@
 					<form:errors path="email"></form:errors>			
 				</div>
 			
-			
+				<button type="submit">수정하기</button>
 			
 			
 			

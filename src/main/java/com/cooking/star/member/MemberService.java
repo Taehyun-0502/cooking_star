@@ -113,7 +113,11 @@ public class MemberService implements UserDetailsService{
 		
 	}
 	
-	
+	public int myProfileUpdate(MemberDTO memberDTO)throws Exception {
+		
+		int result = memberMapper.myProfileUpdate(memberDTO);
+		return result;
+	}
 	
 	
 	

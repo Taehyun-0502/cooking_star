@@ -14,5 +14,8 @@ public interface MemberMapper {
 	
 	public MemberDTO myProfile(MemberDTO memberDTO)throws Exception;
 	
+	public int myProfileUpdate(MemberDTO memberDTO)throws Exception;
+	
+	
 	
 }

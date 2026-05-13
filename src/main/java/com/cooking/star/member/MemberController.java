@@ -74,15 +74,21 @@ public class MemberController {
 	    memberDTO.setUsername(username);
 
 	    MemberDTO myInfo = memberService.myProfile(memberDTO);
-
-	   
-	    
-	    
+ 
 	    model.addAttribute("memberDTO", myInfo);
 
 	   
 	}
-	
+	@PostMapping("update")
+	public String myProfileUpdate(MemberDTO memberDTO)throws Exception {
+		
+		
+		int result = memberService.myProfileUpdate(memberDTO);
+		
+		
+		
+		return "redirect:/member/mypage";
+	}
 	
 	
 	
