@@ -61,15 +61,31 @@ public class MyRecipeController {
 		
 	}
 	@GetMapping("update")
-	public void update(MyRecipeDTO myRecipeDTO,Model model)throws Exception{
+	public String update(MyRecipeDTO myRecipeDTO,Model model,@AuthenticationPrincipal MemberDTO memberDTO)throws Exception{
 		myRecipeDTO=myRecipeService.detail(myRecipeDTO);
+		
+		if(!myRecipeDTO.getUsername().equals(memberDTO.getUsername())) {
+	        // 다르면 리스트로 쫓아내거나 에러 메시지 처리
+	        return "redirect:/myrecipe/allList"; 
+	    }
+		
+		
+		
 		model.addAttribute("dto",myRecipeDTO);
 		
+		return "myrecipe/update";
 		
 	}
 	
 	@PostMapping("update")
-	public String update(@RequestParam(name = "attach", required = false) MultipartFile attach,MyRecipeDTO myRecipeDTO)throws Exception{
+	public String update(@RequestParam(name = "attach", required = false) MultipartFile attach,MyRecipeDTO myRecipeDTO,@AuthenticationPrincipal MemberDTO memberDTO)throws Exception{
+		MyRecipeDTO checkDTO= myRecipeService.detail(myRecipeDTO);
+		
+		if(!checkDTO.getUsername().equals(memberDTO.getUsername())) {
+	        // 다르면 리스트로 쫓아내거나 에러 메시지 처리
+	        return "redirect:/myrecipe/allList"; 
+	    }
+		
 		int result=myRecipeService.update(myRecipeDTO,attach);
 		return "redirect:/myrecipe/detail?recipeNum="+myRecipeDTO.getRecipeNum();
 	}

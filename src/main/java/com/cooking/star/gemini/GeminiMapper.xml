@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cooking.star.gemini.GeminiMapper">
+	<select id="getMenu" resultType="string">
+	SELECT "GEMINI_CONTENTS" FROM "GEMINI"
+	WHERE "GEMINI_NUM"=1
+	</select>
+	
+	<insert id="updateMenu" parameterType="GeminiDTO">
+	INSERT INTO "GEMINI"
+	VALUES (1,#{mealTime},#{geminiContents},now())
+	ON CONFLICT("GEMINI_NUM")
+	DO UPDATE SET
+		"MEAL_TIME"=EXCLUDED."MEAL_TIME",
+		"GEMINI_CONTENTS"=EXCLUDED."GEMINI_CONTENTS",
+		"UPDATE_TIME"=timezone('KST', now())
+		
+	</insert>
+</mapper>

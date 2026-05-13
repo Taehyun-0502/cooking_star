@@ -55,7 +55,7 @@ public class SecurityConfig {
 			.hasRole("ADMIN")
 			.requestMatchers("/qna/detail","/qna/create","/qna/update","/qna/delete").hasRole("MEMBER")
 			.requestMatchers("/bank/create","/bank/update","/bank/delete").hasAnyRole("ADMIN","MANAGER","MEMBER")
-			.requestMatchers("/member/mypage","/member/logout","/member/update").authenticated()
+			.requestMatchers("/member/mypage","/member/logout","/member/update","myrecipe/update").authenticated()
 			.anyRequest().permitAll()
 			;
 		;	
