@@ -71,7 +71,14 @@ WHERE "USERNAME"=#{username}
  WHERE "USERNAME"=#{username}
  </select>
  
+ <update id="myProfileUpdate" parameterType="MemberDTO">
+ UPDATE "COOK_MEMBER"
+ SET "NAME"=#{name}
+ , "EMAIL"=#{email}
+ WHERE "USERNAME"=#{username}
  
+ 
+ </update>
  
  
  

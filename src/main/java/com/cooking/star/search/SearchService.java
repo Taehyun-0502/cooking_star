@@ -1,6 +1,7 @@
 package com.cooking.star.search;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,13 +52,28 @@ public class SearchService {
 	}
 	
 	
-	
+	//검색한 링크 저장하는 메서드
 	public int save(SearchDTO searchDTO)throws Exception{
 		
 		int result = searchMapper.save(searchDTO);
 		
 		return result;
 		
+	}
+	
+	//자신의 저장한 링크 가져오는 메서드
+	public List<SearchDTO>list(SearchDTO searchDTO)throws Exception{
+		
+		
+		return searchMapper.list(searchDTO);
+		
+		
+		
+	}
+	public int delete(SearchDTO searchDTO)throws Exception{
+		int result = searchMapper.delete(searchDTO);
+		
+		return result;
 	}
 	
 	

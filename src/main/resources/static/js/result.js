@@ -36,7 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
                             <h5 class="card-title text-truncate">${cleanTitle}</h5>
                             <p class="card-text small text-muted text-overflow-3">${cleanDesc}</p>
                             <a href="${item.link}" target="_blank" class="btn btn-outline-primary mt-auto">블로그로 이동</a>
-							
+							<button 
+							    type="button"
+							    class="saveRecipeBtn"
+							    data-title="${cleanTitle}"
+							    data-desc="${cleanDesc}"
+							    data-link="${item.link}">
+							    저장하기
+							</button>
                         </div>
                     </div>
                 </div>`;
@@ -49,3 +56,37 @@ document.addEventListener("DOMContentLoaded", () => {
         resultDiv.innerHTML = "<p class='text-center'>데이터 로딩 중 오류가 발생했습니다.</p>";
     });
 });
+const recipeResult = document.getElementById("recipeResult")
+
+recipeResult.addEventListener("click",(e)=>{
+	
+	if(e.target.classList.contains("saveRecipeBtn")){
+		const searchTitle =e.target.getAttribute("data-title")
+		
+		const link = e.target.getAttribute("data-link")
+		
+		let form= new FormData();
+		
+		form.append("searchTitle",searchTitle);
+		form.append("link",link);
+		
+		fetch("/search/save",{
+			method:"POST",
+			body:form
+			
+			
+		}).then(r=>r.text())
+		.then(r=>{
+			if(r>0){
+				
+				alert("저장 성공")
+			}
+		})
+		
+		
+		
+	}
+	
+})
+
+

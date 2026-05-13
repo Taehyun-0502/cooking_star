@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class SearchDTO {
 
-	private Long searachNum;
+	private Long searchNum;
 	private String searchTitle;
 	private String link;
 	private String username;
