@@ -30,7 +30,7 @@ public class GeminiController {
       
     	model.addAttribute("gemini",menuDB);
     	
-    	
+    	//실시간검색어 메인화면에 뿌리기
     	List<Map<String,Object>> ar = logService.logRanking();
     	System.out.println("결과 리스트 크기: " + (ar != null ? ar.size() : "null"));
     	model.addAttribute("ranking",ar);

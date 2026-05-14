@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cooking.star.cart.CartMapper">
+  <select id="list" parameterType="CartDTO" resultType="CartDTO">
+    SELECT 
+        "CART".*,
+        ("PRODUCT_PRICE" * "PRODUCT_EA") AS "totalPrice" 
+        FROM "CART"
+    WHERE "USERNAME" = #{username}
+    ORDER BY "CART_NUM" DESC
+</select>
+  
+  <insert id="insert" parameterType="CartDTO">
+  INSERT INTO "CART"
+  VALUES (DEFAULT,#{username},#{productName},#{productPrice},#{productEa},#{productImg})
+  </insert>
+  
+  <delete id="delete" parameterType="CartDTO">
+  	DELETE FROM "CART"
+  	WHERE "CART_NUM"=#{cartNum} AND "USERNAME"=#{username}
+  </delete>
+  </mapper>
