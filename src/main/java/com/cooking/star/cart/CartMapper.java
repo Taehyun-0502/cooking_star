@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CartMapper {
 
-	public List<CartDTO> list()throws Exception;
+	public List<CartDTO> list(CartDTO cartDTO)throws Exception;
 	
 	public int insert(CartDTO cartDTO)throws Exception;
 	

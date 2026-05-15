@@ -46,11 +46,17 @@ public class CartController {
 	}
 	
 	
-	@GetMapping("/cart/list")
-	public void list(Model model)throws Exception{
-		
-//		List<CartDTO> ar =cartService.list();
-//		model.addAttribute("cart", ar);
-//		
+	@GetMapping("list")
+	public String list(Model model,Principal principal)throws Exception{
+		if(principal != null) {
+			CartDTO cartDTO = new CartDTO();
+	        cartDTO.setUsername(principal.getName()); // 내 아이디 세팅
+	        
+	        // 2. 내 아이디에 해당하는 목록만 가져오기
+	        List<CartDTO> ar = cartService.list(cartDTO);
+	        model.addAttribute("list", ar);
+	        return "cart/list";
+		}
+		return "redirect:/member/login";
 	}
 }

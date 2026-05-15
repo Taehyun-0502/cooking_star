@@ -11,8 +11,8 @@ public class CartService {
 	@Autowired
 	private CartMapper cartMapper;
 	
-	public List<CartDTO> list()throws Exception{
-		return cartMapper.list();
+	public List<CartDTO> list(CartDTO cartDTO)throws Exception{
+		return cartMapper.list(cartDTO);
 	}
 	
 	public int insert(CartDTO cartDTO)throws Exception{
