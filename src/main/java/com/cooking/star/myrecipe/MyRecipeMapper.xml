@@ -5,17 +5,26 @@
 
 <mapper namespace="com.cooking.star.myrecipe.MyRecipeMapper">
 	<sql id="search_sql">
-		WHERE
+		AND
 		<choose>
-			<when test="kind=='v2'">"USERNAME"</when>
+			<when test="pager.kind=='v2'">"USERNAME"</when>
 			<otherwise>"RECIPE_TITLE"</otherwise>
 		</choose>
-		LIKE CONCAT('%',#{search},'%')
+		LIKE CONCAT('%',#{pager.search},'%')
 	</sql>
 
+<select id="getMyCount" resultType="Long" >
+    SELECT COUNT("RECIPE_NUM") FROM "COOK_MYRECIPE"
+    WHERE "USERNAME" = #{dto.username}
+    <include refid="search_sql"></include>
+    
+	</select>
+	
 	<select id="getCount" parameterType="Pager" resultType="Long">
 		SELECT COUNT("RECIPE_NUM") FROM "COOK_MYRECIPE"
+		<where>
 		<include refid="search_sql"></include>
+		</where>
 	</select>
 
 	<insert id="create" parameterType="MyRecipeDTO" keyProperty="recipeNum" useGeneratedKeys="true">
@@ -31,9 +40,11 @@
 	
 	<select id="allList" parameterType="Pager" resultType="MyRecipeDTO">
 		SELECT * FROM "COOK_MYRECIPE"
+		<where>
 		<include refid="search_sql"></include>
+		</where>
 		ORDER BY "RECIPE_NUM" DESC
-		LIMIT #{perPage} OFFSET #{startNum}
+		LIMIT #{pager.perPage} OFFSET #{pager.startNum}
 	</select>
 	
 	<resultMap type="MyRecipeDTO" id="recipeResult">
@@ -54,13 +65,15 @@
 	</association>
 	</resultMap>
 	
-	<select id="mylist" parameterType="MyRecipeDTO" resultMap="recipeResult" resultType="MyRecipeDTO">
+	<select id="myList" parameterType="MyRecipeDTO" resultMap="recipeResult" >
 	SELECT * FROM "COOK_MYRECIPE"m
 	LEFT JOIN
 	"RECIPE_FILE"f
 	USING("RECIPE_NUM")
-	WHERE "USERNAME"=#S{username}
-	LIMIT #{perPage} OFFSET #{startNum}
+	WHERE "USERNAME"=#{dto.username}
+	<include refid="search_sql"></include>
+	ORDER BY "RECIPE_NUM" DESC
+	LIMIT #{pager.perPage} OFFSET #{pager.startNum}
 	</select>
 	<select id="detail" parameterType="MyRecipeDTO" resultMap="recipeResult">
 	SELECT * FROM "COOK_MYRECIPE"m
@@ -68,6 +81,7 @@
 	"RECIPE_FILE"f
 	USING("RECIPE_NUM")
 	WHERE "RECIPE_NUM"=#{recipeNum}
+	ORDER BY "RECIPE_NUM" DESC
 	</select>
 	
 	<update id="update" parameterType="MyRecipeDTO">

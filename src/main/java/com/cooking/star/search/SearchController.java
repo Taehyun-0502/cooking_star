@@ -37,6 +37,11 @@ public class SearchController {
 	@GetMapping("result")
 	public String resultPage(@RequestParam(name="query") String query,Principal principal,Model model) throws Exception{
 		
+		
+		if (query == null || query.trim().isEmpty() || !query.contains("레시피")) {
+	        // 인기 검색어 DB에 저장하지 않고 바로 리턴
+	        return "redirect:/"; 
+	    }
 		//log db에 관련된 코드
 		//검색어 저장
 		LogDTO logDTO= new LogDTO();
