@@ -58,6 +58,19 @@ public class MyRecipeController {
 		
 	}
 	
+	@GetMapping("myList")
+	public String myList(Pager pager,Principal principal,Model model) throws Exception{
+		if(principal == null) {
+			return "redirect:/member/login";
+		}
+		MyRecipeDTO myRecipeDTO = new MyRecipeDTO();
+		myRecipeDTO.setUsername(principal.getName());
+		List<MyRecipeDTO> ar = myRecipeService.myList(pager,myRecipeDTO);
+		model.addAttribute("dto", ar);
+		
+		return "myrecipe/myList";
+	}
+	
 	@GetMapping("detail")
 	public void detail(MyRecipeDTO myRecipeDTO,Model model,Principal principal)throws Exception{
 		myRecipeService.updateHit(myRecipeDTO);

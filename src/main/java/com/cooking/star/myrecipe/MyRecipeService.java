@@ -48,6 +48,17 @@ public class MyRecipeService {
 		}
 		return result;
 	}
+	
+	public List<MyRecipeDTO> myList(Pager pager,MyRecipeDTO myRecipeDTO) throws Exception {
+
+		
+		pager.makeStartNum();
+
+		pager.makeBlock(myRecipeMapper.getMyCount(pager,myRecipeDTO));
+		
+		return myRecipeMapper.myList(pager,myRecipeDTO);
+	}
+	
 
 	public List<MyRecipeDTO> allList(Pager pager) throws Exception {
 
