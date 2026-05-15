@@ -42,6 +42,10 @@
 			</form>
 	
 	<script src="/js/mycooking/fileCreate.js"></script>
-	
+	<c:if test="${not empty errorMessage}">
+    <script>
+        alert("${errorMessage}");
+    </script>
+</c:if>
 </body>
 </html>

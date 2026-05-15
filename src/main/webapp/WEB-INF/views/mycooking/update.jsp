@@ -169,31 +169,36 @@ textarea.form-control {
 				<label>기존 이미지</label>
 
 				<c:choose>
-					<c:when test="${not empty dto.list}">
-						<div class="image-list">
-							<c:forEach items="${dto.list}" var="file">
-								<div class="image-item">
+    <c:when test="${not empty dto.list}">
+        <div class="image-list">
+            <c:forEach items="${dto.list}" var="file">
+                <div class="image-item">
 
-									<div class="image-box">
-										<img class="recipe-img"
-											src="${pageContext.request.contextPath}/files/${name}/${file.fileName}"
-											alt="요리 이미지">
-									</div>
+                    <div class="image-box">
+                        <img class="recipe-img"
+                             src="${pageContext.request.contextPath}/files/${name}/${file.fileName}"
+                             alt="요리 이미지">
+                    </div>
 
-									<label class="delete-check"> <input type="checkbox"
-										class="delete-file-check" name="deleteFileNums"
-										value="${file.fileNum}"> 이 이미지 삭제
-									</label>
+                    <label class="delete-check">
+                        <input type="checkbox"
+                               class="delete-file-check"
+                               name="deleteFileNums"
+                               value="${file.fileNum}">
+                        이 이미지 삭제
+                    </label>
 
-								</div>
-							</c:forEach>
-						</div>
-					</c:when>
+                </div>
+            </c:forEach>
+        </div>
+    </c:when>
 
-					<c:otherwise>
-						<div class="empty-file">등록된 이미지가 없습니다.</div>
-					</c:otherwise>
-				</c:choose>
+    <c:otherwise>
+        <div class="empty-file">
+            등록된 이미지가 없습니다.
+        </div>
+    </c:otherwise>
+</c:choose>
 			</div>
 
 			<div class="form-group">

@@ -40,11 +40,18 @@ public class MyCookingController {
 		
 	}
 	@PostMapping("create")
-	public String create(MyCookingDTO myCookingDTO,Principal principal,@RequestParam(name="attach",required = false) MultipartFile[] attach)throws Exception{
+	public String create(MyCookingDTO myCookingDTO,Principal principal,@RequestParam(name="attach",required = false) MultipartFile[] attach,RedirectAttributes redirectAttributes)throws Exception{
 		String username=principal.getName();
 		myCookingDTO.setUsername(username);
 		
-		myCookingService.create(myCookingDTO,attach);
+		try {
+	        myCookingService.create(myCookingDTO, attach);
+	    } catch (IllegalArgumentException e) {
+	        redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+	        redirectAttributes.addFlashAttribute("dto", myCookingDTO);
+
+	        return "redirect:./create";
+	    }
 		
 		return "redirect:/";
 		
@@ -101,7 +108,7 @@ public class MyCookingController {
 	        return "redirect:./detail?cookingNum=" + myCookingDTO.getCookingNum();
 	    }
 	
-@GetMapping("delete")
+@PostMapping("delete")
 public String delete(MyCookingDTO myCookingDTO,Principal principal)throws Exception{
 	
 	myCookingDTO.setUsername(principal.getName());
@@ -111,7 +118,8 @@ public String delete(MyCookingDTO myCookingDTO,Principal principal)throws Except
 	return "redirect:/";
 	
 }
-	 	
+	 
+//my list 보여주기 만들어햠
 	 	
 	 	
 	 	

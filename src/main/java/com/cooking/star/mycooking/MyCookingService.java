@@ -31,7 +31,8 @@ public class MyCookingService {
 		
 		int result = myCookingMapper.delete(cookingDTO);
 		
-		if (result > 0) {
+		
+		if (result > 0 && fileList != null && !fileList.isEmpty()) {
 		        for (MyCookingFIleDTO fileDTO : fileList) {
 		            fileManager.fileDelete(name, fileDTO);
 		        }
@@ -164,6 +165,31 @@ public class MyCookingService {
 	
 	public int create(MyCookingDTO myCookingDTO,MultipartFile [] attach)throws Exception {
 		
+		
+		boolean hasFile=false;
+		
+		if(attach != null) {
+			for(MultipartFile multipartFile : attach) {
+				
+				if(multipartFile != null && !multipartFile.isEmpty()) {
+					
+					hasFile=true;
+					break;
+					
+				}
+				
+			}
+			
+		}
+		if(!hasFile) {
+			throw new IllegalArgumentException("사진은 최소 1장 이상 등록해야 합니다.");
+	    
+		}
+		
+		
+		
+		
+		
 		int result = myCookingMapper.create(myCookingDTO);
 		
 		if(attach == null) {
@@ -172,7 +198,7 @@ public class MyCookingService {
 		}
 		for(MultipartFile f : attach) {
 			
-			if(f.isEmpty()) {
+			if(f.isEmpty() || f == null) {
 				continue;
 			}
 			

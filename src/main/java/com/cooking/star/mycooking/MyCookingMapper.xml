@@ -43,7 +43,7 @@ LIMIT 4
 	<result column="COOKING_CONTENTS" property="cookingContents"/>
 	<result column="COOKING_DATE" property="cookingDate"/>
 	
-	<collection property="list" javaType="java.util.List" ofType="MyCookingFileDTO">
+	<collection property="list" javaType="java.util.List" ofType="MyCookingFileDTO" >
 	
 	<id column="FILE_NUM" property="fileNum"/>
 	<result column="COOKING_NUM" property="cookingNum"/>

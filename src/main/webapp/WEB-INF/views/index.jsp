@@ -83,8 +83,10 @@
                             </div>
                         
                         <div class="d-flex m-3 me-0">
-                            <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
+                           <a href="/cart/search">
+                           <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"  data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
+                           </a>
+                            <a href="/cart/list" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
@@ -208,22 +210,34 @@
                         <div class="mb-4">
                             <a href="${pageContext.request.contextPath}/mycooking/detail?cookingNum=${dto.cookingNum}">
                                 <c:choose>
-                                    <c:when test="${not empty dto.list[0].fileName}">
-                                        <img 
-                                            src="${pageContext.request.contextPath}/files/mycooking/${dto.list[0].fileName}"
-                                            alt="${dto.cookingTitle}"
-                                            class="img-fluid rounded"
-                                            style="width: 100%; height: 180px; object-fit: cover;">
-                                    </c:when>
+    <c:when test="${not empty dto.list}">
+        <c:choose>
+            <c:when test="${not empty dto.list[0].fileName}">
+                <img 
+                    src="${pageContext.request.contextPath}/files/mycooking/${dto.list[0].fileName}"
+                    alt="${dto.cookingTitle}"
+                    class="img-fluid rounded"
+                    style="width: 100%; height: 180px; object-fit: cover;">
+            </c:when>
 
-                                    <c:otherwise>
-                                        <img 
-                                            src="${pageContext.request.contextPath}/resources/img/no-image.png"
-                                            alt="기본 이미지"
-                                            class="img-fluid rounded"
-                                            style="width: 100%; height: 180px; object-fit: cover;">
-                                    </c:otherwise>
-                                </c:choose>
+            <c:otherwise>
+                <img 
+                     src="${pageContext.request.contextPath}/files/mycooking/noimage.jpg"
+                    alt="기본 이미지"
+                    class="img-fluid rounded"
+                    style="width: 100%; height: 180px; object-fit: cover;">
+            </c:otherwise> 
+        </c:choose>
+    </c:when>
+
+    <c:otherwise>
+        <img 
+            src="${pageContext.request.contextPath}/resources/img/noimage2.jpg"
+            alt="기본 이미지"
+            class="img-fluid rounded"
+            style="width: 100%; height: 180px; object-fit: cover;">
+    </c:otherwise>
+</c:choose>
                             </a>
                         </div>
 
@@ -245,6 +259,17 @@
     </div>
 </div>
         <!-- Featurs Section End -->
+<h1>맛집 검색</h1>
+
+    <form action="/spot/search" method="get" class="search-box">
+        <input type="text"
+               name="query"
+               class="search-input"
+               value="${query}"
+               placeholder="예: 강남역 맛집, 홍대 파스타, 수원역 카페">
+
+        <button type="submit" class="search-btn">검색</button>
+    </form>
 
 
         <!-- Fruits Shop Start-->

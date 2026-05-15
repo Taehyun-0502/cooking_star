@@ -40,6 +40,8 @@ public class SearchController {
 		//log db에 관련된 코드
 		//검색어 저장
 		LogDTO logDTO= new LogDTO();
+		
+		
 		logDTO.setLogTitle(query);
 		
 		//로그인 유무 확인해서 유저네임저장
