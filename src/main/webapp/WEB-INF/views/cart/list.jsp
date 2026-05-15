@@ -1,76 +1,91 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta charset="UTF-8">
+    <title>나의 장바구니</title>
+    <style>
+        .cart-img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
+        .product-name { font-size: 1.1rem; font-weight: bold; }
+        .price-text { color: #e44d26; font-weight: bold; }
+        .summary-box { background-color: #f8f9fa; border-radius: 10px; padding: 20px; }
+    </style>
 </head>
-<body>
-	<h1>list Page</h1>
+<body class="bg-light">
 
-	<div>
-		<form action="./allList" method="get">
-			<div class="input-group mb-3">
-				<div>
-					<select name="kind" class="custom-select">
-						<option ${pager.kind eq 'v1'?'selected':''} value="v1"
-							class="dropdown-item">Title</option>
-						<option ${pager.kind eq 'v2'?'selected':''} value="v2"
-							class="dropdown-item">Writer</option>
-					</select> <input type="text" value="${pager.search}" name="search">
-					<button type="submit" id="">검색</button>
-				</div>
-				<table class="table">
-					<thead class="thead-dark">
-						<!-- 제목은 힌번 나오면 됨 -->
-						<tr>
-							<th>글번호</th>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>좋아요</th>
-							<th>조회수</th>
-							<th>작성일</th>
-						</tr>
-					</thead>
+<div class="container mt-5 mb-5">
+    <h2 class="mb-4"><i class="fas fa-shopping-cart"></i> 장바구니</h2>
 
-					<tbody>
-						<c:forEach items="${dto}" var="d">
-							<!-- 포이치 반복문 돌리는것 리스트에서꺼낸걸 d라는변수에 담자-->
+    <div class="row">
+        <div class="col-lg-8">
+            <c:set var="totalPrice" value="0" />
+            
+            <c:if test="${empty list}">
+                <div class="card p-5 text-center">
+                    <p class="text-muted">장바구니가 비어 있습니다.</p>
+                    <a href="./search" class="btn btn-outline-primary m-auto" style="width: 200px;">상품 검색하러 가기</a>
+                </div>
+            </c:if>
 
-							<tr>
-								<td>${d.recipeNum}</td>
-								<td><a href="/myrecipe/detail?recipeNum=${d.recipeNum}">${d.recipeTitle}</a></td>
-								<td>${d.username}</td>
-								<td>${d.recipeGoodCount}</td>
-								<td>${d.recipeHit}</td>
-								<td>${d.recipeDate}</td>
-								</tr>
+            <c:forEach items="${list}" var="d">
+                <c:set var="totalPrice" value="${totalPrice + (d.productPrice * d.productEa)}" />
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-2 text-center">
+                                <img src="${d.productImg}" class="cart-img" alt="상품 이미지">
+                            </div>
+                            <div class="col-md-5">
+                                <div class="product-name">${d.productName}</div>
+                                <div class="small text-muted">무게당 최저가 기준</div>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <div class="price-text mb-2">
+                                    <fmt:formatNumber value="${d.productPrice}" pattern="#,###"/>원
+                                </div>
+                                <div class="input-group input-group-sm m-auto" style="width: 100px;">
+                                    <input type="number" class="form-control text-center" value="${d.productEa}" min="1">
+                                </div>
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <button class="btn btn-sm btn-outline-danger delete-btn" data-num="${d.cartNum}">
+                                    <i class="fas fa-trash"></i> 삭제
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
 
-						</c:forEach>
+        <div class="col-lg-4">
+            <div class="summary-box shadow-sm border">
+                <h4 class="mb-4">결제 정보</h4>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>상품 금액</span>
+                    <span><fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>배송비</span>
+                    <span class="text-success">무료</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-4">
+                    <span class="font-weight-bold">총 결제 금액</span>
+                    <span class="h4 font-weight-bold text-danger">
+                        <fmt:formatNumber value="${totalPrice}" pattern="#,###"/>원
+                    </span>
+                </div>
+                <button class="btn btn-primary btn-block btn-lg">주문하기</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-					</tbody>
-				</table>
-				<a href="/myrecipe/create">
-				<button type="button">레시피 작성</button>
-				</a>
-
-				<ul class="pagination">
-					<li class="page-item ${pager.pre?'':'disabled'}"><a
-						class="page-link"
-						href="./allList?page=${pager.pre?pager.start-1:pager.start}&search=${pager.search}&kind=${pager.kind}"
-						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-					</a></li>
-					<c:forEach begin="${pager.start}" end="${pager.end}" var="i">
-						<li class="page-item"><a class="page-link"
-							href="./allList?page=${i}&search=${pager.search}&kind=${pager.kind}">${i}</a></li>
-					</c:forEach>
-					<li class="page-item  ${pager.next?'':'disabled'}"><a
-						class="page-link"
-						href="./allList?page=${pager.next?pager.end+1:pager.end}&kind=${pager.kind}&search=${pager.search}"
-						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-					</a></li>
-				</ul></body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/cart/cartList.js"></script> </body>
 </html>
