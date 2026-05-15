@@ -2,8 +2,10 @@ package com.cooking.star.spot;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,13 +26,23 @@ public class SpotService {
 	@Autowired
 	private SpotMapper spotMapper;
 	
-	public List<SpotDTO> search(String query)throws Exception{
+	
+	public List<SpotDTO>myList(String username)throws Exception{
+		
+		
+		return spotMapper.myList(username);
+	}
+	
+	
+	
+	//맛집을 검색하는 api
+	public List<SpotDTO> search(String query,String username)throws Exception{
 		
 		
 		String url="https://dapi.kakao.com/v2/local/search/keyword.json";
 		
 		URI uri=UriComponentsBuilder
-				.fromHttpUrl(url)
+				.fromUriString(url)
 				.queryParam("query", query)
 				.queryParam("category_group_code", "FD6")
 				.queryParam("size", 10)
@@ -57,6 +69,8 @@ public class SpotService {
 
         List<SpotDTO> result = new ArrayList<>();
 
+
+        
         if (documents == null) {
             return result;
         }
@@ -74,9 +88,28 @@ public class SpotService {
 
             result.add(dto);
         }
+        
+        List<SpotDTO> mySpotList = spotMapper.myList(username);
+
+        // 3. 내가 저장한 맛집들의 placeUrl만 Set에 담기
+        Set<String> savedUrlSet = new HashSet<>();
+
+        if (mySpotList != null) {
+            for (SpotDTO mySpot : mySpotList) {
+                savedUrlSet.add(mySpot.getPlaceUrl());
+            }
+        }
+
+        // 4. 카카오 검색 결과와 내 저장 맛집 비교
+        for (SpotDTO spotDTO : result) {
+            if (savedUrlSet.contains(spotDTO.getPlaceUrl())) {
+                spotDTO.setSaved(true);
+            }
+        }
 
         return result;
     }
+        
 
 	public int add(SpotDTO spotDTO)throws Exception {
 		

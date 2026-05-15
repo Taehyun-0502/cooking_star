@@ -42,7 +42,7 @@
                             <td colspan="6" class="text-center p-5">
                                 <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
                                 <p class="text-muted">구매하신 내역이 없습니다.</p>
-                                <a href="/product/list" class="btn btn-primary">쇼핑하러 가기</a>
+                                <a href="/cart/search" class="btn btn-primary">쇼핑하러 가기</a>
                             </td>
                         </tr>
                     </c:if>

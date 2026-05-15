@@ -3,6 +3,7 @@ package com.cooking.star.mycooking;
 import java.security.Principal;
 import java.util.List;
 
+import com.cooking.star.pager.Pager;
 import com.cooking.star.security.AddLogout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,16 @@ public class MyCookingController {
 		
 		return this.name;
 	}
+	@GetMapping("myList")
+	public void myList(Principal principal,Model model,Pager pager)throws Exception{
+		String username=principal.getName();
+		List<MyCookingDTO>ar=myCookingService.myList(username,pager);
+		model.addAttribute("myList", ar);
+		
+	}
+	
+	
+	
 	
 	
 	@GetMapping("create")

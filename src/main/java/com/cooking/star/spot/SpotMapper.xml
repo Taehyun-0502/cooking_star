@@ -13,6 +13,11 @@ VALUES (default,#{username},#{placeName},#{addressName},#{placeUrl},#{phone})
 
 </insert>
 
+<select id="myList" parameterType="String" resultType="SpotDTO">
+SELECT * FROM "MY_SPOT"
+WHERE "USERNAME"=#{username}
+
+</select>
 
 
 

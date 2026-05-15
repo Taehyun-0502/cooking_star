@@ -103,10 +103,28 @@
                     <a href="${spot.placeUrl}" target="_blank" class="place-link">
                         카카오맵에서 보기
                     </a>
-	
+	<%-- 
 	<button type="button" class="spotBtn" 
 	data-place-name="${spot.placeName}" data-address-name="${spot.addressName}" 
-	data-phone="${spot.phone}" data-url="${spot.placeUrl}">내 맛집 리스트에 추가</button>
+	data-phone="${spot.phone}" data-url="${spot.placeUrl}">내 맛집 리스트에 추가</button> --%>
+	<c:choose>
+    <c:when test="${spot.saved}">
+        <button type="button" class="btn btn-secondary" disabled>
+            이미 추가됨
+        </button>
+    </c:when>
+
+    <c:otherwise>
+        <button type="button" 
+                class="spotBtn btn btn-primary"
+                data-place-name="${spot.placeName}" 
+                data-address-name="${spot.addressName}" 
+                data-phone="${spot.phone}" 
+                data-url="${spot.placeUrl}">
+            내 맛집 리스트에 추가
+        </button>
+    </c:otherwise>
+</c:choose>
 
 
                 </div>

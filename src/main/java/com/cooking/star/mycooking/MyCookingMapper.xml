@@ -119,8 +119,23 @@ AND "USERNAME"=#{username}
     
 </delete>
 
+<select id="myList" parameterType="Pager" resultMap="cookingResult">
+SELECT * FROM "MY_COOKING" m
+LEFT JOIN "COOKING_FILE" c
+USING("COOKING_NUM")
+WHERE "USERNAME"=#{username}
+ORDER BY "COOKING_NUM" DESC
+LIMIT #{pager.perPage} OFFSET #{pager.startNum}
+
+</select>
+
+<select id="getCount" parameterType="String" resultType="long">
+SELECT COUNT(*) FROM "MY_COOKING"
+WHERE "USERNAME"=#{username}
 
 
+
+</select>
 
 
 

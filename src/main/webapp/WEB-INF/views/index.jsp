@@ -69,18 +69,29 @@
                             <a href="/" class="nav-item nav-link active">Home</a>
                             <a href="/temp/shop" class="nav-item nav-link">Shop</a>
                             <a href="/shop-detail" class="nav-item nav-link">Shop Detail</a>
-                        <sec:authorize access="isAuthenticated()">
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                     <a href="/cart" class="dropdown-item">Cart</a>
                                     <a href="/chackout" class="dropdown-item">Chackout</a>
-                                    <a href="/mycooking/create" class="dropdown-item">요리 왕 게시판</a>
-                                    <a href="/search/list" class="dropdown-item">링크 리스트</a>
+                                    
                             <a href="/myrecipe/allList" class="dropdown-item">레시피 모음</a>
                                 </div>
                         </div>
                             </div>
+                        <sec:authorize access="isAuthenticated()">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                    <a href="/cart" class="dropdown-item">Cart</a>
+                                    <a href="/search/list" class="dropdown-item">저장한 링크 리스트</a>
+                                    <a href="/mycooking/create" class="dropdown-item">요리 왕 글 작성</a>
+                                    <a href="/mycooking/myList" class="dropdown-item">나의 요리 왕 게시글 보기</a>
+                            <a href="/spot/myList" class="dropdown-item">내 맛집 리스트</a>
+                                </div>
+                        </div>
+                            </div>
+                            
                         
                         <div class="d-flex m-3 me-0">
                            <a href="/cart/search">
@@ -90,6 +101,7 @@
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                             </a>
+                             <a href="/buylist/list" class="position-relative me-4 my-auto"><i class="fas fa-receipt fa-2x text-primary"></i></a>
                             <a href="/member/mypage" class="my-auto">
                                 <i class="fas fa-user fa-2x"></i>
                             </a>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cooking.star.file.FileManager;
+import com.cooking.star.pager.Pager;
 
 @Service
 public class MyCookingService {
@@ -20,6 +21,19 @@ public class MyCookingService {
 	
 	@Value("${app.mycooking}")
 	private String name;
+	
+	public List<MyCookingDTO>myList(String username,Pager pager)throws Exception{
+		
+		pager.makeBlock(myCookingMapper.getCount(username));
+		pager.makeStartNum();
+		
+		
+		
+		
+		
+		return myCookingMapper.myList(username,pager);
+	}
+	
 	
 	
 	public int delete(MyCookingDTO cookingDTO)throws Exception{

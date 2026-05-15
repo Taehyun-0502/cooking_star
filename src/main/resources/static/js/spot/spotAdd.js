@@ -7,39 +7,31 @@ const spotBtns = document.querySelectorAll(".spotBtn");
 spotBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
 
-        const placeName = btn.dataset.placeName;
-        const addressName = btn.dataset.addressName;
-        const phone = btn.dataset.phone;
-        const url = btn.dataset.url;
+        const form = new FormData();
 
-        let form = new FormData();
+        form.append("placeName", btn.dataset.placeName);
+        form.append("addressName", btn.dataset.addressName);
+        form.append("phone", btn.dataset.phone);
+        form.append("placeUrl", btn.dataset.url);
 
-        form.append("placeName",placeName)
-        form.append("addressName",addressName)
-         form.append("phone",phone)
-         form.append("placeUrl",url)
+        fetch("/spot/add", {
+            method: "POST",
+            body: form
+        })
+        .then(response => response.text())
+        .then(result => {
+            if (result > 0) {
+                alert("내 맛집 리스트에 추가되었습니다.");
 
-         fetch("/spot/add",{
-            method:"POST",
-            body:form
-         }).then(response=>response.text())
-         .then(result=>{
-
-            if(result>0){
-                alert("맛집 리스트에 추가 되었습니다")
-
+                btn.innerText = "이미 추가됨";
+                btn.disabled = true;
+                btn.classList.remove("btn-primary");
+                btn.classList.add("btn-secondary");
+                btn.classList.remove("spotBtn");
+            } else {
+                alert("추가에 실패했습니다.");
             }
-            else{
-                alert("추가에 실패 했습니다")
-            }
-         })
-
-
-
-        console.log(placeName);
-        console.log(addressName);
-        console.log(phone);
-        console.log(url);
+        });
     });
 });
 

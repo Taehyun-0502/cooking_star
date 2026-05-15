@@ -15,7 +15,7 @@ public class SpotDTO {
 	 private String addressName;
 	 private String phone;
 	 private String placeUrl;
-
+	 private boolean saved;
 
 
 

@@ -28,11 +28,12 @@ public class SpotController {
     }
 	
 	@GetMapping("search")
-	public String search(@RequestParam(name="query",required = false) String query,Model model)throws Exception{
+	public String search(@RequestParam(name="query",required = false) String query,Model model,Principal principal)throws Exception{
 		
 		if(query != null && !query.trim().isEmpty()) {
-			
-			List<SpotDTO>list = spotService.search(query);
+		
+			String username=principal.getName();
+			List<SpotDTO>list = spotService.search(query,username);
 			
 			
 			model.addAttribute("list", list);
@@ -58,7 +59,16 @@ public class SpotController {
 		
 		
 	}
-	
+	@GetMapping("myList")
+	public void myList(Principal principal,Model model)throws Exception{
+		String username= principal.getName();
+		
+		
+		List<SpotDTO>ar=spotService.myList(username);
+		
+		model.addAttribute("myList", ar);
+		
+	}	
 	
 	
 	
