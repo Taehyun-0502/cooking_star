@@ -22,4 +22,12 @@
   	DELETE FROM "CART"
   	WHERE "CART_NUM"=#{cartNum} AND "USERNAME"=#{username}
   </delete>
+  
+  <update id="updateEa" parameterType="CartDTO">
+    UPDATE "CART" 
+    SET "PRODUCT_EA" = #{productEa} 
+    WHERE "CART_NUM" = #{cartNum}
+</update>
+
+
   </mapper>

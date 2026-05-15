@@ -12,4 +12,9 @@ public interface CartMapper {
 	public int insert(CartDTO cartDTO)throws Exception;
 	
 	public int delete(CartDTO cartDTO) throws Exception;
+	
+	public int updateEa(CartDTO cartDTO) throws Exception;
+	
+
 }
+

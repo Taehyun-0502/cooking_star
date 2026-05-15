@@ -19,4 +19,11 @@ public class CartService {
 		return cartMapper.insert(cartDTO);
 	}
 
+	public int updateEa(CartDTO cartDTO) throws Exception {
+	    return cartMapper.updateEa(cartDTO);
+	}
+
+	public int delete(CartDTO cartDTO) throws Exception {
+	    return cartMapper.delete(cartDTO);
+	}
 }

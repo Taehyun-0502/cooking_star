@@ -2,6 +2,8 @@
  * 
  */
 $(document).ready(function() {
+	
+	//장바구니 담기
     $(".add-cart-btn").click(function() {
         const btn = $(this);
         const cardBody = btn.closest(".card-body");
@@ -37,4 +39,5 @@ $(document).ready(function() {
             }
         });
     });
+	//장바구니 담기 끝
 });
