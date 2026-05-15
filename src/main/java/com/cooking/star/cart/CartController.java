@@ -59,4 +59,24 @@ public class CartController {
 		}
 		return "redirect:/member/login";
 	}
+	
+	@PostMapping("updateEa")
+	@ResponseBody
+	public int updateEa(CartDTO cartDTO) throws Exception {
+	    // JS에서 보낸 데이터가 cartDTO의 cartNum, productEa에 자동으로 매칭됩니다.
+	    return cartService.updateEa(cartDTO);
+	}
+
+	@PostMapping("delete")
+	@ResponseBody
+	public int delete(CartDTO cartDTO, Principal principal) throws Exception {
+	    // 1. 로그인 안 되어 있으면 거절
+	    if (principal == null) return -1;
+
+	   
+	    cartDTO.setUsername(principal.getName());
+	    
+	    
+	    return cartService.delete(cartDTO);
+	}
 }
