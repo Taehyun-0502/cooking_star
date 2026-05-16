@@ -17,7 +17,7 @@ public interface MyRecipeMapper {
 	public List<MyRecipeDTO> allList(@Param("pager")Pager pager);
 	public MyRecipeDTO detail(MyRecipeDTO myRecipeDTO);
 	public int addRecipeimg(RecipeFileDTO recipeFileDTO);
-	public int update(MyRecipeDTO myRecipeDTO,MultipartFile attach);
+	public int update(@Param("dto") MyRecipeDTO myRecipeDTO,MultipartFile attaah )throws Exception;
 	public List<MyRecipeDTO> myList(@Param("pager") Pager pager,@Param("dto") MyRecipeDTO myRecipeDTO);
 	
 	//디테일 조회시 조회수 증가 메서드
