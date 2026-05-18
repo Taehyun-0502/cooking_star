@@ -22,6 +22,8 @@ public interface MemberMapper {
 	
 	public int myProfileUpdate(MemberDTO memberDTO)throws Exception;
 	
+	public int updateProfile(ProfileDTO profileDTO)throws Exception;
+	public int deleteProfile(String username)throws Exception;
 	
 	public List<MyRecipeDTO> user(MemberDTO memberDTO)throws Exception;
 	

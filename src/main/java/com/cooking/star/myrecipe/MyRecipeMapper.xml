@@ -8,6 +8,8 @@
 		AND
 		<choose>
 			<when test="pager.kind=='v2'">"USERNAME"</when>
+			<when test="pager.kind=='v3'">"RECIPE_CATEGORY"</when>
+			<when test="pager.kind=='v4'">"RECIPE_BASE"</when>
 			<otherwise>"RECIPE_TITLE"</otherwise>
 		</choose>
 		LIKE CONCAT('%',#{pager.search},'%')
@@ -32,7 +34,7 @@
 		keyProperty="recipeNum" useGeneratedKeys="true">
 		INSERT INTO "COOK_MYRECIPE"
 		VALUES
-		(DEFAULT,#{username},#{recipeTitle},#{recipeContents},0,0,now())
+		(DEFAULT,#{username},#{recipeTitle},#{recipeContents},0,0,now(),#{recipeCategory},#{recipeBase})
 	</insert>
 
 	<insert id="addRecipeimg" parameterType="RecipeFileDTO">
@@ -60,6 +62,8 @@
 		<result column="RECIPE_GOOD_COUNT" property="recipeGoodCount" />
 		<result column="RECIPE_HIT" property="recipeHit" />
 		<result column="RECIPE_DATE" property="recipeDate" />
+		<result column="RECIPE_CATEGORY" property="recipeCategory" />
+		<result column="RECIPE_BASE" property="recipeBase" />
 
 		<collection property="recipeFileDTO"
 			javaType="java.util.List" ofType="RecipeFileDTO">
@@ -98,7 +102,9 @@
 		UPDATE "COOK_MYRECIPE"
 		<set>
 			<if test="dto.recipeTitle !=null">"RECIPE_TITLE" =#{dto.recipeTitle},</if>
-			<if test="dto.recipeContents !=null">"RECIPE_CONTENTS" =#{dto.recipeContents}</if>
+			<if test="dto.recipeContents !=null">"RECIPE_CONTENTS" =#{dto.recipeContents},</if>
+			<if test="dto.recipeCategory != null">"RECIPE_CATEGORY" = #{dto.recipeCategory},</if>
+       	  <if test="dto.recipeBase != null">"RECIPE_BASE" = #{dto.recipeBase}</if>
 		</set>
 		WHERE "RECIPE_NUM"=#{dto.recipeNum}
 	</update>
@@ -126,7 +132,14 @@
 		"USERNAME"=#{username} AND "RECIPE_NUM"=#{recipeNum}
 	</delete>
 
-
+	<select id="fileList" resultType="RecipeFileDTO">
+		SELECT * FROM "RECIPE_FILE"
+		WHERE "FILE_NUM" IN
+		<foreach collection="deleteFiles" item="fileNum" open="("
+			separator="," close=")">
+			#{fileNum}
+		</foreach>
+	</select>
 
 
 

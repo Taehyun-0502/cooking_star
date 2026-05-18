@@ -24,8 +24,10 @@
                         <form action="./allList" method="get" id="searchForm">
                             <div class="input-group w-100 mx-auto d-flex">
                                 <select name="kind" class="form-select border-0 bg-light py-3">
-                                    <option ${pager.kind eq 'v1'?'selected':''} value="v1">Title</option>
-                                    <option ${pager.kind eq 'v2'?'selected':''} value="v2">Writer</option>
+                                    <option ${pager.kind eq 'v1'?'selected':''} value="v1">제목</option>
+                                    <option ${pager.kind eq 'v2'?'selected':''} value="v2">작성자</option>
+                                    <option ${pager.kind eq 'v3'?'selected':''} value="v3">카테고리</option>
+                                    <option ${pager.kind eq 'v4'?'selected':''} value="v4">재료</option>
                                 </select>
                                 <input type="text" name="search" value="${pager.search}" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                                 <button type="submit" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></button>
@@ -47,6 +49,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">글번호</th>
+                                        <th scope="col">카테고리</th>
                                         <th scope="col">제목</th>
                                         <th scope="col">작성자</th>
                                         <th scope="col">좋아요</th>
@@ -58,6 +61,7 @@
                                     <c:forEach items="${dto}" var="d">
                                         <tr>
                                             <td><p class="mb-0 mt-4">${d.recipeNum}</p></td>
+                                            <td><p class="mb-0 mt-4">${d.recipeCategory}</p></td>
                                             <td><p class="mb-0 mt-4"><a href="/myrecipe/detail?recipeNum=${d.recipeNum}">${d.recipeTitle}</a></p></td>
                                             <td><p class="mb-0 mt-4">${d.username}</p></td>
                                             <td><p class="mb-0 mt-4">${d.recipeGoodCount}</p></td>

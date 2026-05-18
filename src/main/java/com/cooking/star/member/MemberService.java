@@ -123,9 +123,29 @@ public class MemberService implements UserDetailsService{
 		
 	}
 	
-	public int myProfileUpdate(MemberDTO memberDTO)throws Exception {
+	public int myProfileUpdate(MemberDTO memberDTO,MultipartFile attach)throws Exception {
 		
 		int result = memberMapper.myProfileUpdate(memberDTO);
+		
+		if(attach!=null && !attach.isEmpty()) {
+			//유저의 기존 정보 조회
+			MemberDTO beforeInfo=memberMapper.myProfile(memberDTO);
+			//프로필사진 파일명 조회
+			if(beforeInfo != null &&beforeInfo.getProfileDTO()!=null&& beforeInfo.getProfileDTO().getFileName() != null) {
+				
+			
+				fileManager.fileDelete(name,beforeInfo.getProfileDTO());
+				memberMapper.deleteProfile(memberDTO.getUsername());
+			}
+			String newFile=fileManager.fileSave(name, attach);
+			
+			ProfileDTO profileDTO=new ProfileDTO();
+			profileDTO.setFileName(newFile);
+			profileDTO.setOriName(attach.getOriginalFilename());
+			profileDTO.setUsername(memberDTO.getUsername());
+			
+			memberMapper.addProfile(profileDTO);
+		}
 		return result;
 	}
 	

@@ -39,15 +39,39 @@
 								class="w-100 form-control border-0 py-3 mb-4 bg-white">
 						</div>
 						<div class="mb-3">
-							<label class="form-label">제목</label> <input type="text" value="${dto.recipeTitle}"
-								name="recipeTitle" class="w-100 form-control border-0 py-3 mb-4">
+							<label class="form-label">제목</label> <input type="text"
+								value="${dto.recipeTitle}" name="recipeTitle"
+								class="w-100 form-control border-0 py-3 mb-4">
 						</div>
 						<div class="mb-3">
-							<label class="form-label">내용</label>
+							<label class="form-label">요리 종류 (카테고리)</label> <select
+								name="recipeCategory"
+								class="w-100 form-select border-0 py-3 mb-4"
+								style="background-color: #fff;">
+								<option value="" disabled selected>요리 종류를 선택해 주세요</option>
+								<option value="한식">한식</option>
+								<option value="중식">중식</option>
+								<option value="일식">일식</option>
+								<option value="양식">양식</option>
+								<option value="디저트">디저트</option>
+								<option value="기타">기타/퓨전</option>
+							</select>
+						</div>
+						
+						<div class="mb-3">
+							<label class="form-label">재료 목록</label>
+							<input type="text" name="recipeBase"
+								class="w-100 form-control border-0 py-3 mb-4"value="${dto.recipeBase}">
+						</div>
+						
+						<div class="mb-3">
+							<label class="form-label">요리방법</label>
 							<textarea name="recipeContents"
 								class="w-100 form-control border-0 py-3 mb-4" rows="10"
 								style="resize: none;">${dto.recipeContents}</textarea>
 						</div>
+						
+
 
 						<div class="mb-4">
 							<div
@@ -78,9 +102,9 @@
 <!-- Create Recipe End -->
 <script src="/js/myRecipe/create.js"></script>
 <c:if test="${not empty message}">
-    <script>
-        alert("${message}");
-    </script>
+	<script>
+		alert("${message}");
+	</script>
 </c:if>
 <jsp:include page="../common/footer.jsp" />
 <jsp:include page="../common/scripts.jsp" />
