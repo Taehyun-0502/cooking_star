@@ -101,10 +101,10 @@ public class MemberController {
 	   
 	}
 	@PostMapping("update")
-	public String myProfileUpdate(MemberDTO memberDTO)throws Exception {
+	public String myProfileUpdate(MemberDTO memberDTO,@RequestParam(name="attach", required = false) MultipartFile attach)throws Exception {
 		
 		
-		int result = memberService.myProfileUpdate(memberDTO);
+		int result = memberService.myProfileUpdate(memberDTO,attach);
 		
 		
 		

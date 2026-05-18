@@ -64,7 +64,6 @@ WHERE "USERNAME"=#{username}
  
  
  <select id="myProfile" parameterType="MemberDTO" resultMap="loginResult">
- 
  SELECT * FROM "COOK_MEMBER" m
  LEFT JOIN "COOK_PROFILE" p 
  USING ("USERNAME")
@@ -76,10 +75,17 @@ WHERE "USERNAME"=#{username}
  SET "NAME"=#{name}
  , "EMAIL"=#{email}
  WHERE "USERNAME"=#{username}
- 
- 
  </update>
- 
+ <update id="updateProfile" parameterType="ProfileDTO">
+    UPDATE "COOK_PROFILE"
+    SET "FILE_NAME" = #{fileName},
+        "ORI_NAME" = #{oriName}
+    WHERE "USERNAME" = #{username}
+</update>
+<delete id="deleteProfile" parameterType="String">
+    DELETE FROM "COOK_PROFILE"
+    WHERE "USERNAME" = #{username}
+</delete>
  
  <select id="user" parameterType="MemberDTO" resultType="MyRecipeDTO">
  

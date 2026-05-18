@@ -20,6 +20,8 @@ public class MyRecipeDTO {
 	private Long recipeGoodCount;
 	private Long recipeHit;
 	private LocalDate recipeDate;
+	private String recipeCategory;
+	private String recipeBase;
 	private List<RecipeFileDTO> recipeFileDTO;
 	private Pager pager;
 }

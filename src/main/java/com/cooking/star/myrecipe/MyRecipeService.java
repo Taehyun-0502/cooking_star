@@ -80,14 +80,17 @@ public class MyRecipeService {
 	
 	public int update(MyRecipeDTO myRecipeDTO,MultipartFile[] attach,List<Long> deleteFiles)throws Exception{
 		
-		//기존파일에서 x버튼누를시 db에서 파일삭제
-		if(deleteFiles !=null && !deleteFiles.isEmpty()) {
-			myRecipeMapper.deleteFiles(deleteFiles);
-		}
-		//로컬에서도 삭제
+		//기존파일에서 x버튼누를시 db에서 파일삭제 로컬에서도 삭제
 		if(deleteFiles != null && !deleteFiles.isEmpty()) {
-		    // 1. deleteFiles(파일번호 리스트)를 가지고 DB에서 기존 파일명(fileName)들을 먼저 SELECT해옵니다.
+			
+		    // 1. deleteFiles(파일번호 리스트)를 가지고 DB에서 기존 파일명(fileName)들을 먼저 SELECT
+			List<RecipeFileDTO> ar=myRecipeMapper.fileList(deleteFiles);
 		    // 2. 반복문을 돌며 fileManager.fileDelete("myrecipe", 꺼내온FileDTO)를 실행해 실물 파일을 지웁니다.
+			if(ar!=null) {
+				for(RecipeFileDTO files:ar) {
+					fileManager.fileDelete(name, files);
+				}
+			}
 		    
 		    // 3. 그 후 기존에 작성하신 DB 삭제 쿼리를 실행합니다.
 		    myRecipeMapper.deleteFiles(deleteFiles);
@@ -98,11 +101,11 @@ public class MyRecipeService {
 			for(MultipartFile file : attach) {
 				if(file !=null && !file.isEmpty()) {
 					//로컬에 파일 저장
-					String name =fileManager.fileSave("myrecipe", file);
+					String savename =fileManager.fileSave("myrecipe", file);
 					
 					RecipeFileDTO recipeFileDTO = new RecipeFileDTO();
 	                recipeFileDTO.setRecipeNum(myRecipeDTO.getRecipeNum());
-	                recipeFileDTO.setFileName(name);
+	                recipeFileDTO.setFileName(savename);
 	                recipeFileDTO.setOriName(file.getOriginalFilename());
 	                
 	                //db에도 인서트
