@@ -69,7 +69,17 @@ public class SpotController {
 		model.addAttribute("myList", ar);
 		
 	}	
-	
+	@PostMapping("delete")
+	public String delete(Principal principal,SpotDTO spotDTO)throws Exception{
+		
+		String username=principal.getName();
+		spotDTO.setUsername(username);
+		
+		spotService.delete(spotDTO);
+		
+		return "redirect:./myList";
+		
+	}
 	
 	
 	

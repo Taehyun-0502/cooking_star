@@ -117,7 +117,10 @@ public class SpotService {
 		
 	}
 	
-	
+	public int delete(SpotDTO spotDTO)throws Exception{
+		
+		return spotMapper.delete(spotDTO);
+	}
         
 		
 		

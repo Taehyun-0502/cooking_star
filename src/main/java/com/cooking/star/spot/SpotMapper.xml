@@ -20,7 +20,14 @@ WHERE "USERNAME"=#{username}
 </select>
 
 
+<delete id="delete" parameterType="SpotDTO">
+DELETE FROM "MY_SPOT"
+WHERE "USERNAME"=#{username}
+AND "SPOT_NUM"=#{spotNum}
 
+
+
+</delete>
 
 
 

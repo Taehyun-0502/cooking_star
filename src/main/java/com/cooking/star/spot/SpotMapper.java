@@ -14,6 +14,6 @@ public interface SpotMapper {
 	
 	public List<SpotDTO>myList(@Param("username") String username)throws Exception;
 	
-	
+	public int delete(SpotDTO spotDTO)throws Exception;
 	
 }
