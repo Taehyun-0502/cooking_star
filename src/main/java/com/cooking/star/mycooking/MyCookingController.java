@@ -130,7 +130,7 @@ public String delete(MyCookingDTO myCookingDTO,Principal principal)throws Except
 	
 }
 	 
-//my list 보여주기 만들어햠
+
 	 	
 	 	
 	 	
