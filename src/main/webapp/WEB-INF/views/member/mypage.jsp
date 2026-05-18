@@ -59,6 +59,12 @@
                                 <p class="text-muted mb-0">Following</p>
                             </a>
                         </div>
+                         <div class="col-6">
+                            <a href="/bookmark/list" class="d-block p-4 bg-white rounded shadow-sm hover-zoom text-decoration-none">
+                                <h3 class="text-primary display-6">${bookmark}</h3>
+                                <p class="text-muted mb-0">내 북마크 목록</p>
+                            </a>
+                        </div>
                     </div>
 
                     <div class="text-center">

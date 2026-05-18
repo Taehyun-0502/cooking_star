@@ -97,16 +97,39 @@
 							<span>${isGood ? '좋아요 취소' : '좋아요'}</span>
 						</button>
 
-						<c:if test="${pageContext.request.userPrincipal.name eq dto.username}">
-							<div class="d-flex gap-2">
+						<div class="d-flex flex-wrap gap-2">
+							<sec:authorize access="isAuthenticated()">
+							<c:if test="${pageContext.request.userPrincipal.name ne dto.username}">
+								<c:choose>
+									<c:when test="${isBookmark}">
+										<a href="${pageContext.request.contextPath}/bookmark/delete?recipeNum=${dto.recipeNum}" class="btn btn-outline-secondary px-4 rounded-pill shadow-sm">
+											<i class="fas fa-bookmark me-1"></i> 북마크 취소
+										</a>
+									</c:when>
+									<c:otherwise>
+										<a href="${pageContext.request.contextPath}/bookmark/add?recipeNum=${dto.recipeNum}" class="btn btn-outline-primary px-4 rounded-pill shadow-sm">
+											<i class="far fa-bookmark me-1"></i> 북마크
+										</a>
+									</c:otherwise>
+								</c:choose>
+								</c:if>
+							</sec:authorize>
+							<sec:authorize access="!isAuthenticated()">
+							
+								<a href="${pageContext.request.contextPath}/member/login" class="btn btn-outline-primary px-4 rounded-pill shadow-sm">
+									<i class="far fa-bookmark me-1"></i> 북마크
+								</a>
+								
+							</sec:authorize>
+							<c:if test="${pageContext.request.userPrincipal.name eq dto.username}">
 								<a href="/myrecipe/update?recipeNum=${dto.recipeNum}" class="btn btn-outline-warning px-4 rounded-pill shadow-sm">
 									<i class="fas fa-edit me-1"></i> 수정
 								</a>
 								<a href="/myrecipe/delete?recipeNum=${dto.recipeNum}" class="btn btn-outline-danger px-4 rounded-pill shadow-sm" onclick="return confirm('정말 이 레시피를 삭제하시겠습니까?');">
 									<i class="fas fa-trash-alt me-1"></i> 삭제
 								</a>
-							</div>
-						</c:if>
+							</c:if>
+						</div>
 					</div>
 					
 				</div>

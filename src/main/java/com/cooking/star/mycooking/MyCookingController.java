@@ -119,6 +119,7 @@ public class MyCookingController {
 	        return "redirect:./detail?cookingNum=" + myCookingDTO.getCookingNum();
 	    }
 	
+	 	
 @PostMapping("delete")
 public String delete(MyCookingDTO myCookingDTO,Principal principal)throws Exception{
 	

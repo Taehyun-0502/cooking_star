@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cooking.star.bookmark.BookmarkDTO;
+import com.cooking.star.bookmark.BookmarkService;
 import com.cooking.star.follow.FollowDTO;
 import com.cooking.star.follow.FollowService;
 import com.cooking.star.myrecipe.MyRecipeDTO;
@@ -39,6 +41,8 @@ public class MemberController {
 	public String getName() {
 		return this.name;
 	}
+	@Autowired
+	private BookmarkService bookmarkService;
 	
 	@GetMapping("join")
 	public void join(MemberDTO memberDTO)throws Exception {
@@ -80,7 +84,13 @@ public class MemberController {
 		
 		// 로그인 한 사람이 팔로잉 한 수 
 		int following=memberService.followingCount(username);
+		BookmarkDTO bookmarkDTO = new BookmarkDTO();
+		bookmarkDTO.setUsername(principal.getName());
 		
+		
+		int bookmarkCount=bookmarkService.bookCount(bookmarkDTO);
+		
+		model.addAttribute("bookmark", bookmarkCount);
 		model.addAttribute("myProfile",m);
 		model.addAttribute("follower", follower);
 		model.addAttribute("following", following);

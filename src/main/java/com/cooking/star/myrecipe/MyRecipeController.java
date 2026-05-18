@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cooking.star.bookmark.BookmarkDTO;
+import com.cooking.star.bookmark.BookmarkService;
 import com.cooking.star.comment.CommentDTO;
 import com.cooking.star.comment.CommentMapper;
 import com.cooking.star.good.GoodDTO;
@@ -31,6 +33,9 @@ public class MyRecipeController {
 
 	@Autowired
 	private GoodService goodService;
+	
+	@Autowired
+	private BookmarkService bookmarkService;
 	
 	@Autowired
 	private MyRecipeService myRecipeService;
@@ -103,6 +108,7 @@ public class MyRecipeController {
 		model.addAttribute("dto",myRecipeDTO);
 		
 		boolean isGood=false;
+		boolean isBookmark=false;
 		
 		if(principal != null) {
 			GoodDTO goodDTO = new GoodDTO();
@@ -111,11 +117,17 @@ public class MyRecipeController {
 			
 			isGood=goodService.isGood(goodDTO);
 			
+			BookmarkDTO bookmarkDTO = new BookmarkDTO();
+			bookmarkDTO.setRecipeNum(myRecipeDTO.getRecipeNum());
+			bookmarkDTO.setUsername(principal.getName());
+			isBookmark=bookmarkService.bookmarkCheck(bookmarkDTO)>0;
+			
 		}
 		List<CommentDTO>comment=commentMapper.getCommentList(myRecipeDTO.getRecipeNum());
 		model.addAttribute("comment", comment);
 		
 		model.addAttribute("isGood", isGood);
+		model.addAttribute("isBookmark", isBookmark);
 		
 	}
 	@GetMapping("update")
