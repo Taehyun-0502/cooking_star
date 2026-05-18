@@ -1,6 +1,7 @@
 package com.cooking.star.myrecipe;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.cooking.star.pager.Pager;
 
@@ -19,6 +20,6 @@ public class MyRecipeDTO {
 	private Long recipeGoodCount;
 	private Long recipeHit;
 	private LocalDate recipeDate;
-	private RecipeFileDTO recipeFileDTO;
+	private List<RecipeFileDTO> recipeFileDTO;
 	private Pager pager;
 }

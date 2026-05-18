@@ -13,98 +13,122 @@
 		LIKE CONCAT('%',#{pager.search},'%')
 	</sql>
 
-<select id="getMyCount" resultType="Long" >
-    SELECT COUNT("RECIPE_NUM") FROM "COOK_MYRECIPE"
-    WHERE "USERNAME" = #{dto.username}
-    <include refid="search_sql"></include>
-    
+	<select id="getMyCount" resultType="Long">
+		SELECT COUNT("RECIPE_NUM") FROM "COOK_MYRECIPE"
+		WHERE "USERNAME" =
+		#{dto.username}
+		<include refid="search_sql"></include>
+
 	</select>
-	
+
 	<select id="getCount" parameterType="Pager" resultType="Long">
 		SELECT COUNT("RECIPE_NUM") FROM "COOK_MYRECIPE"
 		<where>
-		<include refid="search_sql"></include>
+			<include refid="search_sql"></include>
 		</where>
 	</select>
 
-	<insert id="create" parameterType="MyRecipeDTO" keyProperty="recipeNum" useGeneratedKeys="true">
+	<insert id="create" parameterType="MyRecipeDTO"
+		keyProperty="recipeNum" useGeneratedKeys="true">
 		INSERT INTO "COOK_MYRECIPE"
 		VALUES
-		(DEFAULT,#{username},#{recipeTitle},#{recipeContents},#{recipeGoodCount},#{recipeHit},now())
+		(DEFAULT,#{username},#{recipeTitle},#{recipeContents},0,0,now())
 	</insert>
 
 	<insert id="addRecipeimg" parameterType="RecipeFileDTO">
-	INSERT INTO "RECIPE_FILE"
-	VALUES (DEFAULT,#{recipeNum},#{fileName},#{oriName})
+		INSERT INTO
+		"RECIPE_FILE"
+		VALUES (DEFAULT,#{recipeNum},#{fileName},#{oriName})
 	</insert>
-	
-	<select id="allList" parameterType="Pager" resultType="MyRecipeDTO">
+
+	<select id="allList" parameterType="Pager"
+		resultType="MyRecipeDTO">
 		SELECT * FROM "COOK_MYRECIPE"
 		<where>
-		<include refid="search_sql"></include>
+			<include refid="search_sql"></include>
 		</where>
 		ORDER BY "RECIPE_NUM" DESC
-		LIMIT #{pager.perPage} OFFSET #{pager.startNum}
+		LIMIT #{pager.perPage} OFFSET
+		#{pager.startNum}
 	</select>
-	
+
 	<resultMap type="MyRecipeDTO" id="recipeResult">
-	<id column="RECIPE_NUM" property="recipeNum"/>
-	<result column="USERNAME" property="username"/>
-	<result column="RECIPE_TITLE" property="recipeTitle"/>
-	<result column="RECIPE_CONTENTS" property="recipeContents"/>
-	<result column="RECIPE_GOOD_COUNT" property="recipeGoodCount"/>
-	<result column="RECIPE_HIT" property="recipeHit"/>
-	<result column="RECIPE_DATE" property="recipeDate"/>
-	
-	<association property="recipeFileDTO" javaType="RecipeFileDTO">
-	<id column="FILE_NUM" property="fileNum"/>
-	<result column="RECIPE_NUM" property="recipeNum"/>
-	 <result column="FILE_NAME" property="fileName"/>
-	 <result column="ORI_NAME" property="oriName"/>
-	 
-	</association>
+		<id column="RECIPE_NUM" property="recipeNum" />
+		<result column="USERNAME" property="username" />
+		<result column="RECIPE_TITLE" property="recipeTitle" />
+		<result column="RECIPE_CONTENTS" property="recipeContents" />
+		<result column="RECIPE_GOOD_COUNT" property="recipeGoodCount" />
+		<result column="RECIPE_HIT" property="recipeHit" />
+		<result column="RECIPE_DATE" property="recipeDate" />
+
+		<collection property="recipeFileDTO"
+			javaType="java.util.List" ofType="RecipeFileDTO">
+			<id column="FILE_NUM" property="fileNum" />
+			<result column="RECIPE_NUM" property="recipeNum" />
+			<result column="FILE_NAME" property="fileName" />
+			<result column="ORI_NAME" property="oriName" />
+
+		</collection>
 	</resultMap>
-	
-	<select id="myList" parameterType="MyRecipeDTO" resultMap="recipeResult" >
-	SELECT * FROM "COOK_MYRECIPE"m
-	LEFT JOIN
-	"RECIPE_FILE"f
-	USING("RECIPE_NUM")
-	WHERE "USERNAME"=#{dto.username}
-	<include refid="search_sql"></include>
-	ORDER BY "RECIPE_NUM" DESC
-	LIMIT #{pager.perPage} OFFSET #{pager.startNum}
+
+	<select id="myList" parameterType="MyRecipeDTO"
+		resultMap="recipeResult">
+		SELECT * FROM "COOK_MYRECIPE"m
+		LEFT JOIN
+		"RECIPE_FILE"f
+		USING("RECIPE_NUM")
+		WHERE "USERNAME"=#{dto.username}
+		<include refid="search_sql"></include>
+		ORDER BY "RECIPE_NUM" DESC
+		LIMIT #{pager.perPage} OFFSET
+		#{pager.startNum}
 	</select>
-	<select id="detail" parameterType="MyRecipeDTO" resultMap="recipeResult">
-	SELECT * FROM "COOK_MYRECIPE"m
-	LEFT JOIN
-	"RECIPE_FILE"f
-	USING("RECIPE_NUM")
-	WHERE "RECIPE_NUM"=#{recipeNum}
-	ORDER BY "RECIPE_NUM" DESC
+	<select id="detail" parameterType="MyRecipeDTO"
+		resultMap="recipeResult">
+		SELECT * FROM "COOK_MYRECIPE"m
+		LEFT JOIN
+		"RECIPE_FILE"f
+		USING("RECIPE_NUM")
+		WHERE "RECIPE_NUM"=#{recipeNum}
+		ORDER BY
+		"RECIPE_NUM" DESC
 	</select>
-	
-	<update id="update" parameterType="MyRecipeDTO">
-	UPDATE "COOK_MYRECIPE"
-	<set>
-		<if test="recipeTitle !=null">"RECIPE_TITLE" =#{recipeTitle},</if>
-		<if test="recipeContents !=null">"RECIPE_CONTENTS" =#{recipeContents}</if>
-	</set>
-	WHERE "RECIPE_NUM"=#{recipeNum}
+
+	<update id="update">
+		UPDATE "COOK_MYRECIPE"
+		<set>
+			<if test="dto.recipeTitle !=null">"RECIPE_TITLE" =#{dto.recipeTitle},</if>
+			<if test="dto.recipeContents !=null">"RECIPE_CONTENTS" =#{dto.recipeContents}</if>
+		</set>
+		WHERE "RECIPE_NUM"=#{dto.recipeNum}
 	</update>
-	
-	
+
+	<delete id="deleteFiles">
+		DELETE FROM "RECIPE_FILE"
+		WHERE "FILE_NUM" IN
+		<foreach collection="deleteFiles" item="fileNum" open="("
+			separator="," close=")">
+			#{fileNum}
+		</foreach>
+	</delete>
+
 	<update id="updateHit">
-    UPDATE "COOK_MYRECIPE"
-    SET "RECIPE_HIT" = "RECIPE_HIT" + 1
-    WHERE "RECIPE_NUM" = #{recipeNum}
-</update>
-	
-	
-	
-	
-	
-	
-	
-	
+		UPDATE "COOK_MYRECIPE"
+		SET "RECIPE_HIT" = "RECIPE_HIT"
+		+ 1
+		WHERE "RECIPE_NUM" = #{recipeNum}
+	</update>
+
+
+	<delete id="delete">
+		DELETE FROM "COOK_MYRECIPE"
+		WHERE
+		"USERNAME"=#{username} AND "RECIPE_NUM"=#{recipeNum}
+	</delete>
+
+
+
+
+
+
 </mapper>
