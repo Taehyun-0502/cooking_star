@@ -52,7 +52,8 @@ public class MemberService implements UserDetailsService{
 		
 		memberDTO.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
 		int result =memberMapper.join(memberDTO);
-		
+		//권한 자동 memeber 인서트
+		memberMapper.addRole(memberDTO.getUsername());
 		if(attach != null && !attach.isEmpty()) {
 			String fileName= fileManager.fileSave(name, attach);
 			

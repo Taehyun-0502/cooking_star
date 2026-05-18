@@ -13,6 +13,7 @@ import com.cooking.star.myrecipe.MyRecipeDTO;
 public interface MemberMapper {
 
 	public int join(MemberDTO memberDTO)throws Exception;
+	public int addRole(String username)throws Exception;
 	
 	public MemberDTO login(MemberDTO memberDTO)throws UsernameNotFoundException;
 	

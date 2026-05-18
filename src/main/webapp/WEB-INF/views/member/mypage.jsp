@@ -22,10 +22,25 @@
                 <div class="col-lg-8">
                     <div class="text-center mb-5">
                         <div class="position-relative mx-auto" style="width: 200px; height: 200px;">
-                            <img class="img-fluid rounded-circle border border-5 border-white shadow-sm w-100 h-100" 
-                                 style="object-fit: cover;"
-                                 src="/files/${name}/${myProfile.profileDTO.fileName}" 
-                                 alt="Profile Image">
+                        
+                           <c:choose>
+                                <%-- 1. 기존 프로필 사진 데이터와 파일명이 둘 다 존재하는 경우 --%>
+                                <c:when test="${not empty myProfile.profileDTO and not empty myProfile.profileDTO.fileName}">
+                                    <img class="img-fluid rounded-circle border border-5 border-white shadow-sm w-100 h-100" 
+                                         style="object-fit: cover;"
+                                         src="${pageContext.request.contextPath}/files/profile/${myProfile.profileDTO.fileName}" 
+                                         alt="Profile Image">
+                                </c:when>
+                                
+                                <%-- 2. 등록된 프로필 사진이 없는 경우 (정보 수정 페이지와 동일한 기본 아이콘) --%>
+                                <c:otherwise>
+                                    <div class="rounded-circle bg-white d-flex align-items-center justify-content-center shadow-sm border border-5 border-white w-100 h-100">
+                                        <%-- fa-6x를 주어 마이페이지 크기(200px)에 맞게 아이콘을 더 키웠습니다 --%>
+                                        <i class="fas fa-user fa-6x text-secondary"></i>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                            
                         </div>
                         <h2 class="mt-4 mb-2 text-dark font-weight-bold">${myProfile.name}</h2>
                         <p class="text-muted mb-4">${myProfile.email}</p>
