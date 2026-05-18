@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cooking.star.comment.CommentMapper">
+  
+  <resultMap type="CommentDTO" id="commentResult">
+    <id column="COMMENT_NUM" property="commentNum"/>
+    <result column="USERNAME" property="username"/>
+    <result column="RECIPE_NUM" property="recipeNum"/>
+    <result column="CONTENTS" property="contents"/>
+    <result column="CREATE_DATE" property="createDate"/>
+  </resultMap>
+  
+  <select id="getCommentList" parameterType="Long" resultMap="commentResult" >
+  SELECT "COMMENT_NUM", "USERNAME", "RECIPE_NUM", "CONTENTS", "CREATE_DATE"
+  FROM "MYRECIPE_COMMENT"
+  WHERE "RECIPE_NUM"=#{recipeNum}
+  ORDER BY "COMMENT_NUM" DESC
+  
+  </select>
+  <insert id="addComment" parameterType="CommentDTO">
+  INSERT INTO "MYRECIPE_COMMENT"
+  VALUES (default,#{username},#{recipeNum},#{contents},now() AT TIME ZONE 'Asia/Seoul')
+  
+  </insert>
+  
+  <delete id="deleteComment" parameterType="CommentDTO">
+  DELETE FROM "MYRECIPE_COMMENT"
+  WHERE "COMMENT_NUM"=#{commentNum}
+  AND "USERNAME"=#{username}
+  </delete>
+  
+  
+  
+  
+  </mapper>

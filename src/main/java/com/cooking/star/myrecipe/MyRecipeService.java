@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cooking.star.comment.CommentMapper;
 import com.cooking.star.file.FileManager;
 import com.cooking.star.mycooking.MyCookingDTO;
 import com.cooking.star.pager.Pager;
@@ -75,6 +76,8 @@ public class MyRecipeService {
 	}
 
 	public MyRecipeDTO detail(MyRecipeDTO myRecipeDTO)throws Exception{
+			
+		
 		return myRecipeMapper.detail(myRecipeDTO);
 	}
 	

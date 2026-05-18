@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions"%>
 
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/navbar.jsp" />
@@ -113,6 +115,65 @@
 		</div>
 	</div>
 </div>
+
+<div class="container-fluid pb-5">
+	<div class="container pb-5">
+		<div class="bg-white border rounded-4 shadow-sm p-4">
+			<div class="d-flex justify-content-between align-items-center mb-4">
+				<h4 class="fw-bold mb-0">댓글</h4>
+				<span class="text-muted">총 ${fn:length(comment)}개</span>
+			</div>
+
+			<sec:authorize access="isAuthenticated()">
+				<form action="${pageContext.request.contextPath}/myrecipe/comment" method="post" class="mb-4">
+					<input type="hidden" name="recipeNum" value="${dto.recipeNum}">
+					<label for="contents" class="form-label fw-semibold">댓글 작성</label>
+					<textarea id="contents" name="contents" class="form-control mb-3" rows="3"
+						placeholder="댓글을 입력하세요." required></textarea>
+					<div class="text-end">
+						<button type="submit" class="btn btn-primary rounded-pill px-4">등록</button>
+					</div>
+				</form>
+			</sec:authorize>
+
+			<sec:authorize access="!isAuthenticated()">
+				<div class="alert alert-light border mb-4">
+					댓글을 작성하려면 로그인이 필요합니다.
+					<a href="${pageContext.request.contextPath}/member/login" class="text-primary">로그인</a>
+				</div>
+			</sec:authorize>
+
+			<c:choose>
+				<c:when test="${empty comment}">
+					<div class="text-center text-muted py-4">작성된 댓글이 없습니다.</div>
+				</c:when>
+				<c:otherwise>
+					<div class="list-group list-group-flush">
+						<c:forEach items="${comment}" var="reply">
+							<div class="list-group-item px-0 py-3">
+								<div class="d-flex justify-content-between align-items-center mb-2">
+									<strong>${reply.username}</strong>
+									<small class="text-muted">${reply.createDate}</small>
+								</div>
+								<p class="mb-0" style="white-space: pre-wrap;">${reply.contents}</p>
+							</div>
+							<div> 
+							<c:if test="${pageContext.request.userPrincipal.name eq reply.username}">
+							<form action="/myrecipe/commentD" method="post">
+							<input type="hidden" name="commentNum" value="${reply.commentNum}">
+							<input type="hidden" name="recipeNum" value="${dto.recipeNum}">
+								<button type="submit">삭제</button>
+							</form>
+							</c:if>
+							</div>
+						</c:forEach>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
+</div>
+
 <jsp:include page="../common/footer.jsp" />
 <script src="${pageContext.request.contextPath}/js/myRecipe/good.js"></script>
 <jsp:include page="../common/scripts.jsp" />

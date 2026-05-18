@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.cooking.star.comment.CommentDTO;
+import com.cooking.star.comment.CommentMapper;
 import com.cooking.star.good.GoodDTO;
 import com.cooking.star.good.GoodService;
 import com.cooking.star.member.MemberDTO;
@@ -43,6 +45,10 @@ public class MyRecipeController {
 	public String getName() {
 		return this.name;
 	}
+	
+	@Autowired
+	private CommentMapper commentMapper;
+	
 	
 	@PostMapping("create")
 	public String create(MemberDTO memberDTO,MyRecipeDTO myRecipeDTO,Principal principal,
@@ -106,6 +112,8 @@ public class MyRecipeController {
 			isGood=goodService.isGood(goodDTO);
 			
 		}
+		List<CommentDTO>comment=commentMapper.getCommentList(myRecipeDTO.getRecipeNum());
+		model.addAttribute("comment", comment);
 		
 		model.addAttribute("isGood", isGood);
 		
@@ -152,6 +160,31 @@ public class MyRecipeController {
 		int result= myRecipeService.delete(myRecipeDTO);
 		
 		return result;
+	}
+	
+	@PostMapping("comment")
+	public String addComment(CommentDTO commentDTO, Principal principal)throws Exception{
+		
+		if(principal == null) {
+			return "redirect:/member/login";
+		}
+		
+		commentDTO.setUsername(principal.getName());
+		commentMapper.addComment(commentDTO);
+		
+		return "redirect:/myrecipe/detail?recipeNum=" + commentDTO.getRecipeNum();
+	}
+	@PostMapping("commentD")
+	public String deleteComment(CommentDTO commentDTO,Principal principal) throws Exception{
+		
+		if(principal == null) {
+			return "redirect:/member/login";
+		}
+		
+		commentDTO.setUsername(principal.getName());
+		commentMapper.deleteComment(commentDTO);
+		
+		return "redirect:/myrecipe/detail?recipeNum="+commentDTO.getRecipeNum();
 	}
 	
 	
