@@ -3,6 +3,8 @@ package com.cooking.star.mycooking;
 import java.security.Principal;
 import java.util.List;
 
+import com.cooking.star.cookinggood.CookingGoodDTO;
+import com.cooking.star.cookinggood.CookingGoodService;
 import com.cooking.star.pager.Pager;
 import com.cooking.star.security.AddLogout;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class MyCookingController {
 
 	@Autowired
 	private MyCookingService myCookingService;
+	
+	@Autowired
+	private CookingGoodService cookingGoodService;
 
 	@Value("${app.mycooking}")
 	private String name;
@@ -77,10 +82,20 @@ public class MyCookingController {
 //	}
 //	
 	@GetMapping("detail")
-	public void detail (MyCookingDTO myCookingDTO,Model model)throws Exception{
+	public void detail (MyCookingDTO myCookingDTO,Model model,Principal principal,CookingGoodDTO cookingGoodDTO)throws Exception{
 		
 		myCookingDTO=myCookingService.detail(myCookingDTO);
 		model.addAttribute("dto", myCookingDTO);
+		
+		boolean isGood = false;
+	    if (principal != null) { // 로그인한 유저가 있다면
+	        cookingGoodDTO.setUsername(principal.getName());
+	        // 아까 서비스에 만들어둔 count 메서드로 이미 눌렀는지 확인 (1이면 true)
+	        isGood = cookingGoodService.count(cookingGoodDTO) > 0; 
+	    }
+	    
+	    // 🔥 중요: JSP의 ${isGood}과 이름을 똑같이 맞춰서 던집니다!
+	    model.addAttribute("isGood", isGood);
 	
 	}
 	 @GetMapping("update")

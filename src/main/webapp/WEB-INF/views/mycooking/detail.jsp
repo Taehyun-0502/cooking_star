@@ -34,6 +34,13 @@
                         <a href="/member/user?username=${dto.username}" class="text-primary">
                             <c:out value="${dto.username}" />
                         </a>
+                    </span>   
+                </div>
+                <div class="d-flex gap-4 text-muted mt-2">
+                    <span><i class="fas fa-eye me-1"></i> 조회수: ${dto.cookingHit}</span>
+                    <span>
+                        <i class="fas fa-heart text-danger me-1"></i> 좋아요: 
+                        <span id="goodCount" class="fw-bold text-dark">${dto.cookingGood}</span>
                     </span>
                 </div>
             </header>
@@ -78,21 +85,25 @@
                     </a>
                 </div>
             </section>
-
-            <div class="d-flex justify-content-end gap-2 border-top pt-4">
-                <a href="/" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">목록</a>
-                <a href="./update?cookingNum=${dto.cookingNum}" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">수정</a>
-                <form action="./delete" method="post"
-                    onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display: inline;">
-                    <input type="hidden" name="cookingNum" value="${dto.cookingNum}">
-
-                    <c:if test="${not empty _csrf}">
-                        <input type="hidden" name="${_csrf.parameterName}"
-                            value="${_csrf.token}">
-                    </c:if>
-
-                    <button type="submit" class="btn btn-danger rounded-pill px-4 py-2">삭제</button>
-                </form>
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 border-top pt-4">
+               
+                <div class="d-flex gap-2">
+                <button type="button" id="goodBtn" data-cooking-num="${dto.cookingNum}"
+                    class="btn ${isGood ? 'btn-danger' : 'btn-outline-danger'} rounded-pill px-4 py-2 transition-all shadow-sm">
+                    <i class="fa-heart ${isGood ? 'fas' : 'far'} me-2"></i>
+                    <span>${isGood ? '좋아요 취소' : '좋아요'}</span>
+                </button>
+                    <a href="/" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">목록</a>
+                    <a href="./update?cookingNum=${dto.cookingNum}" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">수정</a>
+                    <form action="./delete" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display: inline;">
+                        <input type="hidden" name="cookingNum" value="${dto.cookingNum}">
+                        <c:if test="${not empty _csrf}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+                        </c:if>
+                        <button type="submit" class="btn btn-danger rounded-pill px-4 py-2">삭제</button>
+                    </form>
+                </div>
+                
             </div>
         </article>
     </div>
@@ -101,3 +112,4 @@
 
 <jsp:include page="../common/footer.jsp" />
 <jsp:include page="../common/scripts.jsp" />
+<script src="${pageContext.request.contextPath}/js/mycooking/good.js"></script>

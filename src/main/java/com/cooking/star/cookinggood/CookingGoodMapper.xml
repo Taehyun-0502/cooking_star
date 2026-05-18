@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cooking.star.cookinggood.CookingGoodMapper">
+  
+  <select id="count" parameterType="CookingGoodDTO" resultType="int" >
+  SELECT COUNT(*) FROM "COOKING_GOOD"
+  WHERE "COOKING_NUM"=#{cookingNum}
+  AND "USERNAME"=#{username}
+  
+  </select>
+  
+  <insert id="good" parameterType="CookingGoodDTO">
+  	INSERT INTO "COOKING_GOOD" ("COOKING_NUM","USERNAME")
+  	VALUES (#{cookingNum},#{username})
+  </insert>
+  
+  <delete id="goodDelete" parameterType="CookingGoodDTO">
+  DELETE FROM "COOKING_GOOD"
+  WHERE "COOKING_NUM"=#{cookingNum}
+  AND "USERNAME"=#{username}
+  
+  </delete>
+  
+  <update id="goodUp" parameterType="CookingGoodDTO">
+  UPDATE "MY_COOKING"
+  SET "COOKING_GOOD"="COOKING_GOOD"+1
+  WHERE "COOKING_NUM"=#{cookingNum}
+  </update>
+  
+  <update id="goodDown" parameterType="CookingGoodDTO">
+  UPDATE "MY_COOKING"
+  SET "COOKING_GOOD"= GREATEST("COOKING_GOOD" - 1, 0)
+  WHERE "COOKING_NUM"=#{cookingNum}
+  </update>
+  
+  <select id="getGoodCount" parameterType="CookingGoodDTO" resultType="int">
+    SELECT "COOKING_GOOD" FROM "MY_COOKING"
+    WHERE "COOKING_NUM" = #{cookingNum}
+  </select>
+  
+  
+  
+  
+  </mapper>
