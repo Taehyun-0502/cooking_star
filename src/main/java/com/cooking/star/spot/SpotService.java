@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.cooking.star.pager.Pager;
+
 @Service
 public class SpotService {
 
@@ -36,7 +38,26 @@ public class SpotService {
 	
 	
 	//맛집을 검색하는 api
-	public List<SpotDTO> search(String query,String username)throws Exception{
+	public List<SpotDTO> search(String query,String username,Pager pager)throws Exception{
+		
+		List<SpotDTO> result = new ArrayList<>();
+		
+		if(query == null || query.isBlank()) {
+			pager.makeBlock(0L);
+			return result;
+		}
+		
+		Long page = pager.getPage();
+		
+		Long perPage = 15L;
+		
+		pager.setPerPage(perPage);
+		
+		if(page > 45L) {
+			page=45L;
+			pager.setPage(page);
+			
+		}
 		
 		
 		String url="https://dapi.kakao.com/v2/local/search/keyword.json";
@@ -45,7 +66,8 @@ public class SpotService {
 				.fromUriString(url)
 				.queryParam("query", query)
 				.queryParam("category_group_code", "FD6")
-				.queryParam("size", 10)
+				.queryParam("page", page)
+				.queryParam("size", perPage)
 				.build()
 				.encode()
 				.toUri();
@@ -64,11 +86,26 @@ public class SpotService {
 
         Map<String, Object> body = response.getBody();
 
+        
+        if(body == null) {
+        pager.makeBlock(0L);	
+        	return result;
+        }
+        
+        
+        
+
+        Map<String, Object> meta = (Map<String, Object>) body.get("meta");
+
+        Long pageableCount = 0L;
+        
+        if (meta != null && meta.get("pageable_count") instanceof Number) {
+            pageableCount = ((Number) meta.get("pageable_count")).longValue();
+        }
+        pager.makeBlock(pageableCount);
+
         List<Map<String, Object>> documents =
-                (List<Map<String, Object>>) body.get("documents");
-
-        List<SpotDTO> result = new ArrayList<>();
-
+        		(List<Map<String, Object>>) body.get("documents");
 
         
         if (documents == null) {
@@ -107,6 +144,9 @@ public class SpotService {
             }
         }
 
+        
+        
+        
         return result;
     }
         

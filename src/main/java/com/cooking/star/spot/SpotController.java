@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.List;
 
 import com.cooking.star.cart.CartController;
+import com.cooking.star.pager.Pager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +30,12 @@ public class SpotController {
     }
 	
 	@GetMapping("search")
-	public String search(@RequestParam(name="query",required = false) String query,Model model,Principal principal)throws Exception{
+	public String search(Pager pager,@RequestParam(name="query",required = false) String query,Model model,Principal principal)throws Exception{
 		
 		if(query != null && !query.trim().isEmpty()) {
 		
 			String username=principal.getName();
-			List<SpotDTO>list = spotService.search(query,username);
+			List<SpotDTO>list = spotService.search(query,username,pager);
 			
 			
 			model.addAttribute("list", list);
@@ -41,7 +43,9 @@ public class SpotController {
 			
 		}
 		model.addAttribute("query", query);
-
+		model.addAttribute("pager", pager);
+		
+		
         return "spot/list";
 		
 	}
