@@ -8,10 +8,11 @@
  <insert id="join" parameterType="MemberDTO" >
  INSERT INTO "COOK_MEMBER"
  VALUES (#{username},#{password},#{name},#{email})
- 
- 
  </insert>
- 
+ <insert id="addRole" parameterType="String">
+ INSERT INTO "COOK_MEMBER_ROLE"
+ VALUES (#{username},3)
+ </insert>
  <select id="login" parameterType="MemberDTO" resultMap="loginResult" >
  select * from "COOK_MEMBER" m
 LEFT JOIN "COOK_PROFILE" p 
