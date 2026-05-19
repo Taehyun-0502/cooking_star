@@ -10,7 +10,7 @@
     <h1 class="text-center text-white display-6">요리 자랑 상세</h1>
     <ol class="breadcrumb justify-content-center mb-0">
         <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/">Home</a></li>
-        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/mycooking/myList">My Cooking</a></li>
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/mycooking/allList">Cooking List</a></li>
         <li class="breadcrumb-item active text-white">Detail</li>
     </ol>
 </div>
@@ -93,7 +93,7 @@
                     <i class="fa-heart ${isGood ? 'fas' : 'far'} me-2"></i>
                     <span>${isGood ? '좋아요 취소' : '좋아요'}</span>
                 </button>
-                    <a href="/" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">목록</a>
+                    <a href="/mycooking/allList" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">목록</a>
                     <a href="./update?cookingNum=${dto.cookingNum}" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">수정</a>
                     <form action="./delete" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display: inline;">
                         <input type="hidden" name="cookingNum" value="${dto.cookingNum}">

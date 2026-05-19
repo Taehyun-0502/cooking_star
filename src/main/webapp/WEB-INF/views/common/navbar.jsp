@@ -33,8 +33,8 @@
 						<div class="dropdown-menu m-0 bg-secondary rounded-0">
 							<a href="${pageContext.request.contextPath}/cart"
 								class="dropdown-item">Cart</a> <a
-								href="${pageContext.request.contextPath}/chackout"
-								class="dropdown-item">Chackout</a> <a
+								href="${pageContext.request.contextPath}/mycooking/allList"
+								class="dropdown-item">요리자랑 리스트</a> <a
 								href="${pageContext.request.contextPath}/myrecipe/allList"
 								class="dropdown-item">레시피 모음</a>
 						</div>

@@ -43,7 +43,7 @@ LEFT JOIN (
 USING ("COOKING_NUM")
 WHERE m."COOKING_DATE" >= (now() AT TIME ZONE 'Asia/Seoul')::date
   AND m."COOKING_DATE" &lt; ((now() AT TIME ZONE 'Asia/Seoul')::date + INTERVAL '1 day')
-ORDER BY m."COOKING_NUM" DESC
+ORDER BY m."COOKING_GOOD" DESC ,m."COOKING_NUM" DESC 
 LIMIT 4
 
 <!-- &lt;는 등호 > 를 의미 한다 -->
@@ -55,7 +55,7 @@ LIMIT 4
 	<where>
 		<include refid="search_sql"></include>
 	</where>
-	ORDER BY "COOKING_DATE" DESC
+	ORDER BY "COOKING_DATE" DESC ,"COOKING_GOOD" DESC
 	LIMIT #{pager.perPage} OFFSET
 	#{pager.startNum}
 
