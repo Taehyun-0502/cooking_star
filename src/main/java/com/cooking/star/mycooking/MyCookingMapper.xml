@@ -4,7 +4,22 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cooking.star.mycooking.MyCookingMapper">
+	<sql id="search_sql">
+		AND
+		<choose>
+			<when test="pager.kind=='v2'">"USERNAME"</when>
+			<when test="pager.kind=='v3'">"COOKING_CONTENTS"</when>
+			<otherwise>"COOKING_TITLE"</otherwise>
+		</choose>
+		LIKE CONCAT('%',#{pager.search},'%')
+	</sql>
 
+<select id="getAllCount" parameterType="Pager" resultType="Long">
+		SELECT COUNT("COOKING_NUM") FROM "MY_COOKING"
+		<where>
+			<include refid="search_sql"></include>
+		</where>
+	</select>
 <insert id="create" parameterType="MyCookingDTO" useGeneratedKeys="true" keyProperty="cookingNum">
 INSERT INTO "MY_COOKING" ("USERNAME","COOKING_TITLE","COOKING_RECIPE","COOKING_CONTENTS","COOKING_DATE")
 VALUES (#{username},#{cookingTitle},#{cookingRecipe},#{cookingContents},now() AT TIME ZONE 'Asia/Seoul')
@@ -34,6 +49,18 @@ LIMIT 4
 <!-- &lt;는 등호 > 를 의미 한다 -->
 
 </select>
+
+<select id="allList" parameterType="Pager">
+	SELECT * FROM "MY_COOKING"
+	<where>
+		<include refid="search_sql"></include>
+	</where>
+	ORDER BY "COOKING_DATE" DESC
+	LIMIT #{pager.perPage} OFFSET
+	#{pager.startNum}
+
+
+</select>
 <resultMap type="MyCookingDTO" id="cookingResult">
 	
 	<id column="COOKING_NUM" property="cookingNum"/>
@@ -42,6 +69,8 @@ LIMIT 4
 	<result column="COOKING_RECIPE" property="cookingRecipe"/>
 	<result column="COOKING_CONTENTS" property="cookingContents"/>
 	<result column="COOKING_DATE" property="cookingDate"/>
+	<result column="COOKING_HIT" property="cookingHit"/>
+	<result column="COOKING_GOOD" property="cookingGood"/>
 	
 	<collection property="list" javaType="java.util.List" ofType="MyCookingFileDTO" >
 	
@@ -60,10 +89,13 @@ SELECT * FROM "MY_COOKING" m
 LEFT JOIN "COOKING_FILE" f
 USING ("COOKING_NUM")
 WHERE "COOKING_NUM"=#{cookingNum}
-
-
-
 </select>
+
+<update id="updateHit" parameterType="MyCookingDTO">
+UPDATE "MY_COOKING"
+SET "COOKING_HIT"="COOKING_HIT"+1
+WHERE "COOKING_NUM"=#{cookingNum}
+</update>
 
 <update id="update" parameterType="MyCookingDTO">
     UPDATE "MY_COOKING"
@@ -132,9 +164,6 @@ LIMIT #{pager.perPage} OFFSET #{pager.startNum}
 <select id="getCount" parameterType="String" resultType="long">
 SELECT COUNT(*) FROM "MY_COOKING"
 WHERE "USERNAME"=#{username}
-
-
-
 </select>
 
 

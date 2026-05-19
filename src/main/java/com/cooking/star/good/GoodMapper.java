@@ -17,4 +17,6 @@ public interface GoodMapper {
 	
 	public int goodDown(MyRecipeDTO myRecipeDTO)throws Exception;
 	
+	public int getGoodCount(GoodDTO goodDTO)throws Exception;
+	
 }

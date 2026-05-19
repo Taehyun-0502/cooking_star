@@ -35,7 +35,10 @@
   SET "RECIPE_GOOD_COUNT"= GREATEST("RECIPE_GOOD_COUNT" - 1, 0)
   WHERE "RECIPE_NUM"=#{recipeNum}
   </update>
-  
+  <select id="getGoodCount" parameterType="GoodDTO" resultType="int">
+    SELECT "RECIPE_GOOD_COUNT" FROM "COOK_MYRECIPE"
+    WHERE "RECIPE_NUM" = #{recipeNum}
+  </select>
   
   
   

@@ -135,6 +135,7 @@ public class MyCookingService {
 
 	public MyCookingDTO detail(MyCookingDTO myCookingDTO) throws Exception {
 
+		myCookingMapper.updateHit(myCookingDTO);
 		return myCookingMapper.detail(myCookingDTO);
 	}
 
@@ -143,7 +144,15 @@ public class MyCookingService {
 		return myCookingMapper.list();
 
 	}
+	
+	public List<MyCookingDTO> allList(Pager pager) throws Exception {
 
+		pager.makeBlock(myCookingMapper.getAllCount(pager));
+		pager.makeStartNum();
+		
+		return myCookingMapper.allList(pager);
+
+	}
 	public int create(MyCookingDTO myCookingDTO, MultipartFile[] attach) throws Exception {
 
 		boolean hasFile = false;

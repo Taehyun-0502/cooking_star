@@ -40,7 +40,7 @@ public class GoodService {
 			isGood=false;
 		}
 		
-		int goodCount=goodMapper.count(goodDTO);
+		int goodCount=goodMapper.getGoodCount(goodDTO);
 		
 		GoodResponseDTO goodResponseDTO = new GoodResponseDTO();
 		goodResponseDTO.setGood(isGood);
@@ -48,6 +48,7 @@ public class GoodService {
 		
 		return goodResponseDTO;
 	}
+	
 
 	public boolean isGood(GoodDTO goodDTO)throws Exception{
 		int result = goodMapper.count(goodDTO);

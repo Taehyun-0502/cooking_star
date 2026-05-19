@@ -16,6 +16,10 @@ public interface MyCookingMapper {
 	
 	public List<MyCookingDTO>list()throws Exception;
 	
+	public List<MyCookingDTO>allList(@Param("pager")Pager pager)throws Exception;
+	
+	public Long getAllCount(@Param("pager")Pager pager)throws Exception;
+	
 	public int update(MyCookingDTO myCookingDTO)throws Exception;
 	
 	public int delete(MyCookingDTO myCookingDTO)throws Exception;
@@ -23,6 +27,8 @@ public interface MyCookingMapper {
 	public int addFile(MyCookingFIleDTO myCookingFIleDTO) throws Exception;
 	
 	public MyCookingDTO detail(MyCookingDTO myCookingDTO)throws Exception;
+	//조회수 증가
+	public int updateHit(MyCookingDTO myCookingDTO)throws Exception;
 	
 	 public MyCookingFIleDTO fileDetail(Long fileNum) throws Exception;
 
