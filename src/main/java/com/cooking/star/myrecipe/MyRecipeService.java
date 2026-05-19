@@ -64,10 +64,29 @@ public class MyRecipeService {
 	
 	public List<MyRecipeDTO> myList(Pager pager,MyRecipeDTO myRecipeDTO) throws Exception {
 
-		
-		pager.makeStartNum();
-
-		pager.makeBlock(myRecipeMapper.getMyCount(pager,myRecipeDTO));
+		Long totalCount=myRecipeMapper.getMyCount(pager, myRecipeDTO);
+		if (totalCount == null || totalCount == 0) {
+			// Pager 객체 내부에 전체 개수를 0으로 명시해주어 1페이지까지만 나오도록 방어막을 칩니다.
+			// (만약 pager에 setTotalCount 메서드가 있다면 세팅해주셔도 좋습니다.)
+			totalCount = 0L;
+		}
+		if (totalCount == 0) {
+			// 만약 Pager 클래스 내부에 총 개수나 페이지 정보를 넣는 메서드가 있다면 강제로 0을 주입합니다.
+			// 예: pager.setTotalCount(0); 
+			
+			// 💡 makeBlock 내부 로직을 타지 않게 하거나, 확실하게 0을 던져줍니다.
+			pager.makeBlock(0L); 
+			pager.makeStartNum();
+			
+			// 계산이 끝난 후 강제로 시작/끝 블록 번호를 1로 고정시켜버립니다.
+			// (Pager 내부 변수명이 다를 수 있으니 만약 에러가 나면 주석 처리하세요)
+			// pager.setStartNum(1);
+			// pager.setLastNum(1);
+		} else {
+			// 글이 존재할 때만 정상적으로 계산을 태웁니다.
+			pager.makeBlock(totalCount);
+			pager.makeStartNum();
+		}
 		
 		return myRecipeMapper.myList(pager,myRecipeDTO);
 	}
