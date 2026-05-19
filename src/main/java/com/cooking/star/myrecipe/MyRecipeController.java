@@ -198,6 +198,22 @@ public class MyRecipeController {
 		
 		return "redirect:/myrecipe/detail?recipeNum="+commentDTO.getRecipeNum();
 	}
+	@PostMapping("deleteM")
+	@ResponseBody
+	public int deleteByManager(MyRecipeDTO myRecipeDTO,Principal principal)throws Exception{
+		if(principal == null) {
+			return -1;
+		}
+
+		String username= principal.getName();
+		
+		myRecipeDTO.setUsername(username);
+		
+		int result=myRecipeService.deleteByManager(myRecipeDTO);
+		
+		return result;
+	}
+	
 	
 	
 }

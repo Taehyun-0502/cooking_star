@@ -141,6 +141,15 @@
 		</foreach>
 	</select>
 
+<delete id="deleteByManager" parameterType="MyRecipeDTO">
+DELETE FROM "COOK_MYRECIPE"
+WHERE "RECIPE_NUM"=#{recipeNum}
+AND EXISTS (SELECT 1 FROM "COOK_MEMBER_ROLE" 
+WHERE "USERNAME"=#{username}
+AND "ROLE_NUM" IN (1,2)
+)
+
+</delete>
 
 
 

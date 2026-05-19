@@ -29,4 +29,6 @@ public interface MyRecipeMapper {
 	
 	//디테일 조회시 조회수 증가 메서드
 	public int updateHit(MyRecipeDTO myRecipeDTO) throws Exception;
+	
+	public int deleteByManager(MyRecipeDTO myRecipeDTO)throws Exception;
 }

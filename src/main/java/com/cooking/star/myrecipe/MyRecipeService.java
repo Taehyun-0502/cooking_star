@@ -29,6 +29,12 @@ public class MyRecipeService {
 	@Autowired
 	private FileManager fileManager;
 
+	public int deleteByManager(MyRecipeDTO myRecipeDTO)throws Exception {
+		
+	
+		return myRecipeMapper.deleteByManager(myRecipeDTO);
+	
+	}
 	
 
 	

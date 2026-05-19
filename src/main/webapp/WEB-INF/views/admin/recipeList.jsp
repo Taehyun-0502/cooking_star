@@ -35,6 +35,7 @@
                         <th scope="col">조회수</th>
                         <th scope="col">작성일</th>
                         <th scope="col">상세</th>
+                        <th scope="col">관리</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,6 +60,13 @@
                                             보기
                                         </a>
                                     </td>
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-danger btn-delete"
+                                                data-num="${recipe.recipeNum}">
+                                            <i class="fas fa-trash-alt"></i> 삭제
+                                        </button>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </c:otherwise>
@@ -71,3 +79,4 @@
 
 <jsp:include page="../common/footer.jsp" />
 <jsp:include page="../common/scripts.jsp" />
+<script src="${pageContext.request.contextPath}/js/admin/delete.js"></script>
