@@ -146,6 +146,7 @@ public class MyRecipeService {
 		//db의 recipefile테이블에서 포링키 케스케이드설정하면 db에서 파일정보도 같이지워짐
 		int result=myRecipeMapper.delete(myRecipeDTO);
 		
+		if(result > 0 && targetFile != null) {
 		for (RecipeFileDTO fileDTO : targetFile) {
 		
 		 //DB 삭제가 성공했고, 아까 따로 빼둔 파일 정보(targetFile)가 존재한다면 로컬에서 파일 삭제
@@ -154,6 +155,7 @@ public class MyRecipeService {
 	    
 	        fileManager.fileDelete("myrecipe",fileDTO);
 	     
+		}
 		}
 		}
 	    return result;

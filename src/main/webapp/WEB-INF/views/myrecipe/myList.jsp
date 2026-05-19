@@ -80,12 +80,14 @@
 											<td><p class="mb-0 mt-4">${d.recipeHit}</p></td>
 											<td><p class="mb-0 mt-4">${d.recipeDate}</p></td>
 											<td class="text-center">
+											<form action="./delete" method="post">
+											
 												<button type="button"
 													class="btn btn-outline-danger btn-sm mt-4 btn-delete"
 													data-num="${d.recipeNum}">
 													<i class="fas fa-trash-alt"></i> 삭제
-												</button>
-												</button>
+												</button>	
+											</form>
 											</td>
 										</tr>
 									</c:forEach>
