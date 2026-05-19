@@ -57,7 +57,14 @@ public class MemberController {
 			
 		}
 		
+		
+		
 		int result=memberService.join(memberDTO,attach);
+		
+		if(result == 0) {
+			
+			
+		}
 		
 		return "redirect:/";
 	}
@@ -111,9 +118,11 @@ public class MemberController {
 	   
 	}
 	@PostMapping("update")
-	public String myProfileUpdate(MemberDTO memberDTO,@RequestParam(name="attach", required = false) MultipartFile attach)throws Exception {
+	public String myProfileUpdate(@Validated(GroupUpdate.class) MemberDTO memberDTO,BindingResult bindingResult,@RequestParam(name="attach", required = false) MultipartFile attach)throws Exception {
 		
-		
+		if(bindingResult.hasErrors()) {
+	        return "member/update";
+		}
 		int result = memberService.myProfileUpdate(memberDTO,attach);
 		
 		

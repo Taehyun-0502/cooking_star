@@ -225,7 +225,7 @@
 										<input type="hidden" name="commentNum"
 											value="${reply.commentNum}"> <input type="hidden"
 											name="recipeNum" value="${dto.recipeNum}">
-										<button type="submit" class="btn-delete">삭제</button>
+										<button type="submit" class="btn btn-outline-danger px-4 rounded-pill shadow-sm btn-delete"><i class="fas fa-trash-alt me-1"></i>삭제</button>
 									</form>
 								</c:if>
 							</div>

@@ -37,7 +37,7 @@ public class SecurityConfig {
 		return web->{
 			web.ignoring()
 			.requestMatchers("/css/**")
-			.requestMatchers("images/**","/img/**","/js/**")
+			.requestMatchers("/images/**","/img/**","/js/**")
 			.requestMatchers("/lib/**")
 			.requestMatchers("/scss/**")
 			;
@@ -51,16 +51,49 @@ public class SecurityConfig {
 		security.cors(cros->{cros.disable();})
 		.csrf(csrf->{csrf.disable();})
 		.authorizeHttpRequests(auth->{
-			auth.requestMatchers("/admin/memberList")
+			auth.requestMatchers(
+			        "/", 
+			        "/member/login",
+			        "/member/join",
+			        "/member/user",
+			        "/myrecipe/allList",
+			        "/myrecipe/detail",
+			        "/mycooking/allList",
+			        "/mycooking/detail"
+			    ).permitAll()
+			.requestMatchers("/admin/memberList")
 			.hasRole("ADMIN")
-			.requestMatchers("/admin/recipeList","/admin/dashboard").hasAnyRole("ADMIN","MANAGER")
+			.requestMatchers("/admin/recipeList","/admin/dashboard","/myrecipe/deleteM").hasAnyRole("ADMIN","MANAGER")
 			.requestMatchers("/admin/**")
-			.hasRole("ADMIN")
-			.requestMatchers("/bank/create","/bank/update","/bank/delete").hasAnyRole("ADMIN","MANAGER","MEMBER")
-			.requestMatchers("/member/mypage","/member/logout","/member/update","myrecipe/update").authenticated()
-			.anyRequest().permitAll()
-			;
-		;	
+			.hasRole("ADMIN");
+
+		    auth.requestMatchers(
+		        "/member/mypage",
+		        "/member/update",
+		        "/member/follower",
+		        "/member/following",
+		        "/myrecipe/create",
+		        "/myrecipe/update",
+		        "/myrecipe/delete",
+		        "/myrecipe/comment",
+		        "/myrecipe/commentD",
+		        "/myrecipe/good",
+		        "/myrecipe/myList",
+		        "/mycooking/create",
+		        "/mycooking/update",
+		        "/mycooking/delete",
+		        "/mycooking/myList",
+		        "/bookmark/**",
+		        "/cart/**",
+		        "/buylist/**",
+		        "/follow/**",
+		        "/spot/**",
+		        "/search/list",
+		        "/search/save",
+		        "/search/delete"
+		    ).authenticated();
+		    
+		    auth.anyRequest().permitAll();	
 			
 		})
 		.formLogin(form->{

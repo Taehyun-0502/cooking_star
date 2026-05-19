@@ -51,6 +51,9 @@ public class MemberService implements UserDetailsService{
 	public int join(MemberDTO memberDTO,MultipartFile attach)throws Exception{
 		
 		memberDTO.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
+		if(memberDTO.getEmail().isEmpty()) {
+			return 0;
+		}
 		int result =memberMapper.join(memberDTO);
 		//권한 자동 memeber 인서트
 		memberMapper.addRole(memberDTO.getUsername());
@@ -126,6 +129,8 @@ public class MemberService implements UserDetailsService{
 	}
 	
 	public int myProfileUpdate(MemberDTO memberDTO,MultipartFile attach)throws Exception {
+		
+			
 		
 		int result = memberMapper.myProfileUpdate(memberDTO);
 		
