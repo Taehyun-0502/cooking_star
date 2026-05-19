@@ -31,8 +31,7 @@
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown">Pages</a>
 						<div class="dropdown-menu m-0 bg-secondary rounded-0">
-							<a href="${pageContext.request.contextPath}/cart"
-								class="dropdown-item">Cart</a> <a
+							 <a
 								href="${pageContext.request.contextPath}/mycooking/allList"
 								class="dropdown-item">요리자랑 리스트</a> <a
 								href="${pageContext.request.contextPath}/myrecipe/allList"
@@ -51,6 +50,7 @@
 									class="dropdown-item">요리자랑 작성</a>
 							</div>
 						</div>
+					</sec:authorize>
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle"
 								data-bs-toggle="dropdown">My Menu</a>
@@ -65,7 +65,6 @@
 									class="dropdown-item">내 맛집 리스트</a>
 							</div>
 						</div>
-					</sec:authorize>
 					<sec:authorize access="hasAnyRole('ADMIN','MANAGER')">
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle"

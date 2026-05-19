@@ -38,7 +38,10 @@ public class MemberDTO implements UserDetails{
 	@NotBlank(groups = {GroupAdd.class,GroupUpdate.class})
 	private String name;
 	
-	@Email(groups = {GroupAdd.class,GroupUpdate.class})
+	@NotBlank(groups = {GroupAdd.class,GroupUpdate.class})	
+	@Pattern(groups = {GroupAdd.class,GroupUpdate.class},
+			regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+	message = "올바른 이메일 형식이 아닙니다")
 	private String email;
 	private boolean enabled;
 	private boolean credentialsNonExpired;
