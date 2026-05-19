@@ -49,6 +49,12 @@ public class Pager {
 	public void makeBlock(Long totalCount) {
 		//한블럭당 페이지넘버 갯수
 		Long perBlock=5L;
+		
+		if(totalCount==0) {
+			perBlock=1L;
+			next=false; //다음블럭은 없음
+			pre=false; //이전블럭 없음
+		}
 		//총 페이지수
 		Long totalPage=totalCount/this.getPerPage();
 		if(totalCount % getPerPage()!=0) {
