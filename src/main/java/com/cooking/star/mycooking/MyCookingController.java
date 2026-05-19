@@ -75,7 +75,7 @@ public class MyCookingController {
 	        return "redirect:./create";
 	    }
 		
-		return "redirect:/";
+		return "redirect:/mycooking/allList";
 		
 	}
 	//인덱스에 뿌려 주기 때문에 다른 곳에서 요청을 처리함
@@ -148,7 +148,7 @@ public String delete(MyCookingDTO myCookingDTO,Principal principal)throws Except
 	
 	myCookingService.delete(myCookingDTO);
 	
-	return "redirect:/";
+	return "redirect:/mycooking/myList";
 	
 }
 	 
