@@ -18,7 +18,7 @@ public class GeminiScheduler {
 	private GeminiMapper geminiMapper;
 	
 	
-	//@PostConstruct //처음 서버 시작시 데이터 넣어주기
+	@PostConstruct //처음 서버 시작시 데이터 넣어주기
 	public void init() throws Exception {
         updateGemini();
     }

@@ -163,7 +163,7 @@ public class MyRecipeController {
 	@ResponseBody
 	public int delete(MyRecipeDTO myRecipeDTO,Principal principal) throws Exception{
 		
-		//로그인이 안되있다면 -1을 js로 전송 -> js에서 -1을 받았다면 로그인화면으로 보냄
+		
 		if(principal == null) {
 			return -1;
 		}
