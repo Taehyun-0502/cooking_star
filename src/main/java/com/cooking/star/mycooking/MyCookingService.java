@@ -201,6 +201,16 @@ public class MyCookingService {
 		return result;
 
 	}
+
+	public List<MyCookingDTO> allList2(Pager pager) throws Exception {
+
+		pager.makeBlock(myCookingMapper.getAllCount(pager));
+		pager.makeStartNum();
+		
+		return myCookingMapper.allList2(pager);
+
+	}
+	
 	
 
 

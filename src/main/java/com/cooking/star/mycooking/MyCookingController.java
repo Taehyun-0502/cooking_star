@@ -50,7 +50,7 @@ public class MyCookingController {
 	}
 	@GetMapping("allList")
 	public void allList(Model model,Pager pager)throws Exception{
-		List<MyCookingDTO>ar=myCookingService.allList(pager);
+		List<MyCookingDTO>ar=myCookingService.allList2(pager);
 		model.addAttribute("allList", ar);
 		
 	}

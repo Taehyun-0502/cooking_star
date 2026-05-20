@@ -72,7 +72,7 @@
             <p>회원님들이 직접 만든 정성 가득한 요리를 만나보세요.</p>
         </div>
         <div class="row g-4">
-            <c:forEach items="${myCookingList}" var="dto">
+            <c:forEach items="${myCookingList}" var="dto" varStatus="status">
                 <div class="col-md-6 col-lg-3">
                     <div class="featurs-item text-center rounded bg-light p-4 h-100 border border-secondary">
                         <div class="mb-4">
@@ -81,7 +81,10 @@
                                     <c:when test="${not empty dto.list}">
                                         <c:choose>
                                             <c:when test="${not empty dto.list[0].fileName}">
-                                                <img src="${pageContext.request.contextPath}/files/mycooking/${dto.list[0].fileName}"
+												<div class="card-header text-center">
+													<strong>${status.count}위</strong>
+												</div>
+												<img src="${pageContext.request.contextPath}/files/mycooking/${dto.list[0].fileName}"
                                                      alt="${dto.cookingTitle}"
                                                      class="img-fluid rounded"
                                                      style="width: 100%; height: 180px; object-fit: cover;">

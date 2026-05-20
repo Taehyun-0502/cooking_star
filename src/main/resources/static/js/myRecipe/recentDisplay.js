@@ -60,8 +60,13 @@ document.addEventListener("DOMContentLoaded", function() {
         let html = "";
         data.forEach(recipe => {
             // 이미지 파일이 없을 경우를 대비한 기본 이미지 설정
-            let imgPath = "/img/default-recipe.jpg"; 
-            if (recipe.recipeFileDTO && recipe.recipeFileDTO.length > 0) {
+            let imgPath = ""; 
+			if(recipe.recipeFileDTO[0].fileName == null){
+				imgPath= "/files/mycooking/noimage.jpg"; 
+			}
+			
+			
+            if (recipe.recipeFileDTO && recipe.recipeFileDTO.length > 0 && recipe.recipeFileDTO[0].fileName) {
                 // 기존 프로젝트 파일 업로드 경로 구조에 맞춰 수정하세요
                 imgPath = "/files/myRecipe/" + recipe.recipeFileDTO[0].fileName; 
             }

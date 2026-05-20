@@ -166,6 +166,18 @@ SELECT COUNT(*) FROM "MY_COOKING"
 WHERE "USERNAME"=#{username}
 </select>
 
+<select id="allList2" parameterType="Pager">
+	SELECT * FROM "MY_COOKING"
+	<where>
+		<include refid="search_sql"></include>
+	</where>
+	ORDER BY "COOKING_NUM" DESC 
+	LIMIT #{pager.perPage} OFFSET
+	#{pager.startNum}
+
+
+</select>
+
 
 
 

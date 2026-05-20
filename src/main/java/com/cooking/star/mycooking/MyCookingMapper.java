@@ -43,5 +43,7 @@ public interface MyCookingMapper {
 	public List<MyCookingDTO>myList(@Param("username")String username,@Param("pager")Pager pager)throws Exception;
 	   
 	   public Long getCount(String username)throws Exception;
+	   
+	   public List<MyCookingDTO>allList2(@Param("pager") Pager pager)throws Exception;
 	
 }
