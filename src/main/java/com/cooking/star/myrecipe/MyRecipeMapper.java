@@ -31,4 +31,6 @@ public interface MyRecipeMapper {
 	public int updateHit(MyRecipeDTO myRecipeDTO) throws Exception;
 	
 	public int deleteByManager(MyRecipeDTO myRecipeDTO)throws Exception;
+	
+	public List<MyRecipeDTO> fileListByNums(@Param("recipeNums") List<Long> recipeNums) throws Exception ;
 }

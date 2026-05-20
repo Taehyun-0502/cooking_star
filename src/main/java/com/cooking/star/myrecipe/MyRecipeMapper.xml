@@ -104,7 +104,7 @@
 			<if test="dto.recipeTitle !=null">"RECIPE_TITLE" =#{dto.recipeTitle},</if>
 			<if test="dto.recipeContents !=null">"RECIPE_CONTENTS" =#{dto.recipeContents},</if>
 			<if test="dto.recipeCategory != null">"RECIPE_CATEGORY" = #{dto.recipeCategory},</if>
-       	  <if test="dto.recipeBase != null">"RECIPE_BASE" = #{dto.recipeBase}</if>
+			<if test="dto.recipeBase != null">"RECIPE_BASE" = #{dto.recipeBase}</if>
 		</set>
 		WHERE "RECIPE_NUM"=#{dto.recipeNum}
 	</update>
@@ -141,16 +141,34 @@
 		</foreach>
 	</select>
 
-<delete id="deleteByManager" parameterType="MyRecipeDTO">
-DELETE FROM "COOK_MYRECIPE"
-WHERE "RECIPE_NUM"=#{recipeNum}
-AND EXISTS (SELECT 1 FROM "COOK_MEMBER_ROLE" 
-WHERE "USERNAME"=#{username}
-AND "ROLE_NUM" IN (1,2)
-)
+	<delete id="deleteByManager" parameterType="MyRecipeDTO">
+		DELETE FROM "COOK_MYRECIPE"
+		WHERE "RECIPE_NUM"=#{recipeNum}
+		AND EXISTS (SELECT 1 FROM "COOK_MEMBER_ROLE"
+		WHERE "USERNAME"=#{username}
+		AND "ROLE_NUM" IN (1,2)
+		)
 
-</delete>
+	</delete>
 
+	<select id="fileListByNums" resultMap="recipeResult">
+		SELECT * FROM "COOK_MYRECIPE" m
+		LEFT JOIN "RECIPE_FILE" f
+		USING("RECIPE_NUM")
+		WHERE "RECIPE_NUM" IN
+		<foreach collection="recipeNums" item="recipeNum" open="("
+			separator="," close=")">
+			#{recipeNum}
+		</foreach>
+		ORDER BY ARRAY_POSITION(
+        ARRAY[
+        <foreach collection="recipeNums" item="recipeNum" separator=",">
+            #{recipeNum}::bigint
+        </foreach>
+        ], 
+        m."RECIPE_NUM"
+    )
+	</select>
 
 
 
