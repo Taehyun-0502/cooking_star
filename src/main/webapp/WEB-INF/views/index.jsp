@@ -137,11 +137,24 @@
     </div>
 </div>
 <!-- Spot Search End -->
- 
- 
- 
+<sec:authorize access="isAuthenticated()">
+    <input type="hidden" id="mainUsername" value="${pageContext.request.userPrincipal.name}">
+    
+    <div class="container py-5">
+        <h2 class="mb-4">최근 본 레시피 👀</h2>
+        <div id="noRecentMessage" class="text-muted py-3" style="display: none;">
+            최근에 본 레시피가 없습니다. 마음에 드는 요리를 찾아보세요!
+        </div>
+        
+        <div id="recentRecipeContainer" class="row g-4">
+            </div>
+    </div>
+</sec:authorize>
 
 
 <jsp:include page="./common/footer.jsp" />
-<script src="${pageContext.request.contextPath}/js/search.js"></script>
 <jsp:include page="./common/scripts.jsp" />
+<script src="${pageContext.request.contextPath}/js/search.js"></script>
+<sec:authorize access="isAuthenticated()">
+    <script src="${pageContext.request.contextPath}/js/myRecipe/recentDisplay.js"></script>
+</sec:authorize>

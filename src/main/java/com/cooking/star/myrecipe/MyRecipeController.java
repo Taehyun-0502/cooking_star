@@ -1,6 +1,7 @@
 package com.cooking.star.myrecipe;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -214,6 +215,18 @@ public class MyRecipeController {
 		return result;
 	}
 	
+	//최근 본 레시피 출력메서드
+
+	@PostMapping("recentList")
+	@ResponseBody
+	public List<MyRecipeDTO> getRecentList(@RequestParam(name = "recipeNums", required = false) List<Long> recipeNums)throws Exception{
+				// 만약 최근 본 레시피 번호가 아예 없다면 빈 리스트 리턴
+				if (recipeNums == null || recipeNums.isEmpty()) {
+					return new ArrayList<>();
+				}
+				return myRecipeService.fileListByNums(recipeNums);
+	}
+
 	
 	
 }

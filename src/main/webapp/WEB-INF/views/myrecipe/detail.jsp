@@ -238,6 +238,13 @@
 </div>
 
 <jsp:include page="../common/footer.jsp" />
+<jsp:include page="../common/scripts.jsp" />
+
 <script src="${pageContext.request.contextPath}/js/myRecipe/good.js"></script>
 <script src="${pageContext.request.contextPath}/js/myRecipe/myList.js"></script>
-<jsp:include page="../common/scripts.jsp" />
+<!-- 최근본 레시피 쿠키저장용 -->
+<sec:authorize access="isAuthenticated()">
+    <input type="hidden" id="recentUsername" value="${pageContext.request.userPrincipal.name}">
+    <input type="hidden" id="recentRecipeNum" value="${dto.recipeNum}">
+    <script src="${pageContext.request.contextPath}/js/myRecipe/recentView.js"></script>
+</sec:authorize>

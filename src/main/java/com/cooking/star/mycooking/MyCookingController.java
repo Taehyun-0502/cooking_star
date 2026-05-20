@@ -1,10 +1,12 @@
 package com.cooking.star.mycooking;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cooking.star.cookinggood.CookingGoodDTO;
 import com.cooking.star.cookinggood.CookingGoodService;
+import com.cooking.star.myrecipe.MyRecipeDTO;
 import com.cooking.star.pager.Pager;
 import com.cooking.star.security.AddLogout;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -151,6 +154,8 @@ public String delete(MyCookingDTO myCookingDTO,Principal principal)throws Except
 	return "redirect:/mycooking/myList";
 	
 }
+
+
 	 
 
 	 	
