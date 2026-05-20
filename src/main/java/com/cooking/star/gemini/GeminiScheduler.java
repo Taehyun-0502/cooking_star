@@ -27,7 +27,7 @@ public class GeminiScheduler {
 	@Scheduled(cron = "0 0 6,11,17 * * *")
 	public void updateGemini()throws Exception{
 		int hour=LocalDateTime.now().getHour();
-		String mealTime=(hour < 11) ? "아침" : (hour < 16 ? "점심" : "저녁");
+		String mealTime=(hour < 11) ? "아침" : (hour < 17 ? "점심" : "저녁");
 		
 		String newMenu = geminiService.menu(mealTime);
 		
