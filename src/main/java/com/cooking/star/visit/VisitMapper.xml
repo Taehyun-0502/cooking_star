@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cooking.star.visit.VisitMapper">
+  
+  <insert id="todayVisit">
+  	INSERT INTO "COOK_VISIT"
+  	VALUES (default,(now() AT TIME ZONE 'Asia/Seoul')::date,#{sessionId})
+  	ON CONFLICT("VISIT_DATE","SESSION_ID")
+  	DO NOTHING
+  </insert>
+  
+  <select id="getTodayVisitCount" resultType="long">
+  SELECT COUNT(*)
+  FROM "COOK_VISIT"
+  WHERE "VISIT_DATE"=(now() AT TIME ZONE 'Asia/Seoul')::date
+  
+  </select>
+  
+  <select id="getTotalMemberCount" resultType="long">
+  SELECT COUNT(*)
+  FROM "COOK_MEMBER"
+  
+  </select>
+  
+  
+  
+  </mapper>

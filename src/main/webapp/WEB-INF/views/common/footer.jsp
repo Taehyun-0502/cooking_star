@@ -4,12 +4,33 @@
 <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
     <div class="container py-5">
         <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
-            <div class="row g-4">
-                <div class="col-lg-12">
+            <div class="row g-4 align-items-center">
+                <div class="col-lg-6">
                     <a href="${pageContext.request.contextPath}/">
                         <h1 class="text-primary mb-0">Cooking Star</h1>
                         <p class="text-secondary mb-0">Delicious Recipes</p>
                     </a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-3 justify-content-lg-end">
+                        <div class="col-sm-6">
+                            <div class="footer-stats-card border rounded text-center p-4 shadow-sm">
+                                <h5 class="mb-3">전체 회원 수</h5>
+                                <p class="display-6 fw-bold mb-0">
+                                    ${totalMemberCount}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="footer-stats-card border rounded text-center p-4 shadow-sm">
+                                <h5 class="mb-3">오늘 방문자 수</h5>
+                                <p class="display-6 fw-bold mb-0">
+                                    ${todayVisitCount}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

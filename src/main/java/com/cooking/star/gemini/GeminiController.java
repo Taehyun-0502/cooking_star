@@ -10,6 +10,7 @@ import com.cooking.star.gemini.GeminiService; // GeminiService 경로
 import com.cooking.star.log.LogService;
 import com.cooking.star.mycooking.MyCookingDTO;
 import com.cooking.star.mycooking.MyCookingService;
+import com.cooking.star.visit.VisitService;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -25,7 +26,8 @@ public class GeminiController {
 	
 	@Autowired
 	private MyCookingService myCookingService;
-	
+	@Autowired
+	private VisitService visitService;
 	
 	@Autowired
 	private LogService logService;
@@ -44,6 +46,11 @@ public class GeminiController {
 		
 		model.addAttribute("myCookingList", list);
     	
+    	Long totalMemberCount =visitService.getTotalMemberCount();
+    	Long todayVisitCount = visitService.getTodayVisitCount();
+    	
+    	 model.addAttribute("totalMemberCount", totalMemberCount);
+         model.addAttribute("todayVisitCount", todayVisitCount);
     	
     	
         return "index"; 

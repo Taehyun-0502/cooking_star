@@ -137,6 +137,10 @@
     </div>
 </div>
 <!-- Spot Search End -->
+ 
+ 
+ 
+
 
 <jsp:include page="./common/footer.jsp" />
 <script src="${pageContext.request.contextPath}/js/search.js"></script>

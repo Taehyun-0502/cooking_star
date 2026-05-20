@@ -493,5 +493,15 @@
 .footer .footer-item p.mb-4 {
     line-height: 35px;
 }
+
+.footer .footer-stats-card {
+    border-color: var(--bs-primary) !important;
+    color: var(--bs-white);
+}
+
+.footer .footer-stats-card h5,
+.footer .footer-stats-card p {
+    color: var(--bs-white);
+}
 /*** Footer End ***/
 
