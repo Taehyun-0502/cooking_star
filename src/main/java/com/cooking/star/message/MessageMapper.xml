@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.cooking.star.message.MessageMapper">
+  
+  <insert id="create" parameterType="MessageDTO" useGeneratedKeys="true" keyProperty="messageNum" keyColumn="MESSAGE_NUM">
+  INSERT INTO "COOK_MESSAGE"
+  VALUES (default,#{writerType},#{username},#{guestName},#{guestEmail},#{messageType},#{title},#{contents},#{readYn},now() AT TIME ZONE 'Asia/Seoul')
+  
+  
+  </insert>
+  
+  <select id="list" resultType="MessageDTO">
+  SELECT * FROM "COOK_MESSAGE"
+  ORDER BY "MESSAGE_NUM" DESC 
+  </select>
+  
+  <select id="detail" parameterType="MessageDTO" resultType="MessageDTO">
+  SELECT * FROM "COOK_MESSAGE"
+  WHERE "MESSAGE_NUM"=#{messageNum}
+  
+  
+  
+  </select>
+  
+  <update id="updateRead" parameterType="MessageDTO" >
+ UPDATE "COOK_MESSAGE"
+ SET "READ_YN"= 'Y'
+ WHERE "MESSAGE_NUM"=#{messageNum}
+ 
+ </update>
+ 
+ <select id="noreadCount" resultType="long" >
+ SELECT COUNT(*)
+ FROM "COOK_MESSAGE"
+ WHERE "READ_YN"= 'N' 
+ </select> 
+  
+  
+  
+  
+  
+  
+  </mapper>

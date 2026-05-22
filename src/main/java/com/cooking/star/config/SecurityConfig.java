@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.cooking.star.member.MemberService;
 import com.cooking.star.security.AddLogout;
 import com.cooking.star.security.AddLogoutHandler;
+import com.cooking.star.security.CustomAccessDeniedHandler;
 import com.cooking.star.security.LoginFailHandler;
 import com.cooking.star.security.LoginSuccessHandler;
 
@@ -31,6 +32,8 @@ public class SecurityConfig {
 	private AddLogoutHandler logoutHandler;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private CustomAccessDeniedHandler accessDeniedHandler;
 	
 	@Bean
 	WebSecurityCustomizer customizer() {
@@ -56,14 +59,15 @@ public class SecurityConfig {
 			        "/member/login",
 			        "/member/join",
 			        "/member/user",
+			        "/accessDenied",
 			        "/myrecipe/allList",
 			        "/myrecipe/detail",
 			        "/mycooking/allList",
-			        "/mycooking/detail"
+			        "/mycooking/detail","/message/create"
 			    ).permitAll()
 			.requestMatchers("/admin/memberList")
 			.hasRole("ADMIN")
-			.requestMatchers("/admin/recipeList","/admin/dashboard","/myrecipe/deleteM").hasAnyRole("ADMIN","MANAGER")
+			.requestMatchers("/admin/recipeList","/admin/dashboard","/myrecipe/deleteM","/message/list","/message/detail","/message/alarm/count").hasAnyRole("ADMIN","MANAGER")
 			.requestMatchers("/admin/**")
 			.hasRole("ADMIN");
 
@@ -121,6 +125,10 @@ public class SecurityConfig {
 			.authenticationSuccessHandler(loginSuccessHandler)
 			.useSecureCookie(true);
 			
+		})
+		.exceptionHandling(exception->{
+			exception.accessDeniedHandler(accessDeniedHandler)
+			.authenticationEntryPoint(accessDeniedHandler);
 		});
 		
 		

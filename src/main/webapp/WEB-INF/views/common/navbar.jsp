@@ -26,7 +26,9 @@
 						class="nav-item nav-link">Home</a> <a
 						href="${pageContext.request.contextPath}/cart/search"
 						class="nav-item nav-link">Shop</a>
-
+						<a
+						href="${pageContext.request.contextPath}/message/create"
+						class="nav-item nav-link">고객센터</a>
 					<div class="nav-item dropdown">
 						<a href="#" class="nav-link dropdown-toggle"
 							data-bs-toggle="dropdown">Pages</a>
@@ -76,12 +78,24 @@
 									class="dropdown-item">Member Management</a>
 								<a href="${pageContext.request.contextPath}/admin/recipeList"
 									class="dropdown-item">Recipe Management</a>
+									<a href="${pageContext.request.contextPath}/message/list"
+									class="dropdown-item">Message List</a>
 							</div>
 						</div>
 					</sec:authorize>
 				</div>
 
 				<div class="d-flex m-3 me-0">
+					<sec:authorize access="hasAnyRole('ADMIN','MANAGER')">
+						<a href="${pageContext.request.contextPath}/message/list"
+							id="messageAlarmLink"
+							class="position-relative me-4 my-auto"
+							title="문의 알림">
+							<i class="fas fa-bell fa-2x text-primary"></i>
+							<span id="messageAlarmBadge"
+								class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
+						</a>
+					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 						<a href="${pageContext.request.contextPath}/cart/search"
 							class="btn border border-secondary btn-md-square rounded-circle bg-white me-4 my-auto">
