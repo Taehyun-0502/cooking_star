@@ -41,7 +41,7 @@ LEFT JOIN (
     ORDER BY "COOKING_NUM", "FILE_NUM" ASC
 ) f
 USING ("COOKING_NUM")
-WHERE m."COOKING_DATE" >= (now() AT TIME ZONE 'Asia/Seoul')::date
+WHERE m."COOKING_DATE" >= ((now() AT TIME ZONE 'Asia/Seoul')::date - INTERVAL '7 day')
   AND m."COOKING_DATE" &lt; ((now() AT TIME ZONE 'Asia/Seoul')::date + INTERVAL '1 day')
 ORDER BY m."COOKING_GOOD" DESC ,m."COOKING_NUM" DESC 
 LIMIT 4

@@ -41,8 +41,6 @@ public class MyRecipeController {
 	@Autowired
 	private MyRecipeService myRecipeService;
 	
-	@GetMapping("create")
-	public void create() throws Exception{}
 	
 	@Value("${app.myrecipe}")
 	private String name;
@@ -55,6 +53,8 @@ public class MyRecipeController {
 	@Autowired
 	private CommentMapper commentMapper;
 	
+	@GetMapping("create")
+	public void create() throws Exception{}
 	
 	@PostMapping("create")
 	public String create(MemberDTO memberDTO,MyRecipeDTO myRecipeDTO,Principal principal,
