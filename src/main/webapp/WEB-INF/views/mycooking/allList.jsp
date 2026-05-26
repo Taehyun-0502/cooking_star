@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/navbar.jsp" />
 
@@ -35,11 +35,13 @@
                         </form>
                     </div>
                     <div class="col-6"></div>
+                    <sec:authorize access="isAuthenticated()">
                     <div class="col-xl-3 text-end">
                         <a href="${pageContext.request.contextPath}/mycooking/create" class="btn border-secondary py-3 px-4 rounded-pill text-primary bg-white">
                             <i class="fas fa-edit me-2"></i>요리자랑 작성
                         </a>
                     </div>
+                    </sec:authorize>
                 </div>
                 
                 <div class="row g-4 mt-2">

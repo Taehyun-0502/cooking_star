@@ -50,7 +50,6 @@
 									class="dropdown-item">요리자랑 작성</a>
 							</div>
 						</div>
-					</sec:authorize>
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle"
 								data-bs-toggle="dropdown">My Menu</a>
@@ -65,6 +64,7 @@
 									class="dropdown-item">내 맛집 리스트</a>
 							</div>
 						</div>
+					</sec:authorize>
 					<sec:authorize access="hasAnyRole('ADMIN','MANAGER')">
 						<div class="nav-item dropdown">
 							<a href="#" class="nav-link dropdown-toggle"
