@@ -94,13 +94,15 @@
                     <span>${isGood ? '좋아요 취소' : '좋아요'}</span>
                 </button>
                     <a href="/mycooking/allList" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">목록</a>
+                    <c:if test="${pageContext.request.userPrincipal.name eq dto.username}">
                     <a href="./update?cookingNum=${dto.cookingNum}" class="btn border border-secondary rounded-pill px-4 py-2 text-primary bg-white">수정</a>
+                   	</c:if>
                     <form action="./delete" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');" style="display: inline;">
                         <input type="hidden" name="cookingNum" value="${dto.cookingNum}">
-                        <c:if test="${not empty _csrf}">
-                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                        </c:if>
+                        <c:if test="${pageContext.request.userPrincipal.name eq dto.username}">
+                           <%--  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
                         <button type="submit" class="btn btn-danger rounded-pill px-4 py-2">삭제</button>
+                        </c:if>
                     </form>
                 </div>
                 

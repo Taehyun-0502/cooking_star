@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			
             if (recipe.recipeFileDTO && recipe.recipeFileDTO.length > 0 && recipe.recipeFileDTO[0].fileName) {
                 // 기존 프로젝트 파일 업로드 경로 구조에 맞춰 수정하세요
-                imgPath = "/files/myRecipe/" + recipe.recipeFileDTO[0].fileName; 
+                imgPath = "/files/myrecipe/" + recipe.recipeFileDTO[0].fileName; 
             }
 
             // 부트스트랩 카드 스타일로 레시피 나열 (기존 allList 디자인을 참고해서 다듬으셔도 좋습니다!)
