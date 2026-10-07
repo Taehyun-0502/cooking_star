@@ -4,7 +4,7 @@
 
 Java 21 · Spring Boot 3.5 · Spring Security · MyBatis · PostgreSQL · JSP/JSTL · Ajax
 
-2인 팀 프로젝트에서 회원 인증/인가, 요리 기록, 커뮤니티 상호작용, 맛집·블로그·상품 검색, 관리자 통계를 구현했습니다.
+2인 팀 프로젝트에서 회원 인증/인가, 댓글·레시피 좋아요·북마크·팔로우, Kakao Local·Naver Blog, 관리자·방문 집계를 담당했고, 요리 기록 게시판은 공동 구현했습니다. Naver Shopping·장바구니·구매내역·Gemini·레시피 파일 처리는 팀원이 담당했습니다.
 
 ## 프로젝트 한눈에 보기
 
@@ -30,25 +30,30 @@ Java 21 · Spring Boot 3.5 · Spring Security · MyBatis · PostgreSQL · JSP/JS
 - 세션 기반 인증과 URL·역할별 접근 제어를 Spring Security 설정으로 분리
 - `Principal`과 SQL 소유자 조건을 함께 사용해 수정·삭제 권한 검증
 - PostgreSQL `ON CONFLICT`로 세션별 일일 방문 중복 기록 방지
-- Naver·Kakao API 결과를 서비스 데이터와 연결해 검색·저장 흐름 구현
+- Naver Blog·Kakao Local API 결과를 서비스 데이터와 연결해 검색·저장 흐름 구현
 - 방문자·회원·레시피 현황을 관리자 화면에서 집계
 
 ## 프로젝트 소개
 
 Cooking Star는 사용자가 레시피와 직접 만든 요리 기록을 등록하고, 다른 사용자의 콘텐츠에 댓글·좋아요·북마크·팔로우로 반응할 수 있는 요리 커뮤니티입니다. 네이버 블로그·쇼핑 검색과 카카오 로컬 검색을 화면 안으로 연결해 레시피 탐색, 재료·상품 확인, 주변 맛집 저장까지 이어지는 사용 흐름을 구성했습니다.
 
-초기 프로젝트인 만큼 JSP와 세션 인증을 선택했지만, 단순 게시판 CRUD에서 멈추지 않고 소유자 검증, 외부 API 응답 가공, 방문자 집계까지 서비스 흐름을 직접 연결했습니다.
+초기 프로젝트인 만큼 JSP와 세션 인증을 선택했습니다. 제가 담당한 범위에서는 소유자 검증, Naver Blog·Kakao Local 응답 가공, 방문자 집계를 서비스 흐름에 연결했습니다.
 
 ## 역할 분담
 
-저는 다음 영역을 담당했습니다.
+저는 다음 영역을 맡았습니다.
 
-- 회원 가입·로그인·로그아웃, BCrypt, remember-me, URL·역할별 인가
-- 요리 기록 게시판과 댓글·레시피 좋아요·북마크·팔로우
-- Naver 검색과 Kakao 맛집 검색·저장
-- 소유자 조건을 포함한 수정·삭제, 방문자 기록, 관리자 통계
+회원가입·로그인·로그아웃, BCrypt, remember-me, URL·역할별 인가
 
-팀원은 레시피 게시판의 주요 CRUD·파일 처리, 장바구니·구매내역, 요리 기록 좋아요를 중심으로 담당했습니다.
+댓글·레시피 좋아요·북마크·팔로우와 소유자 조건을 포함한 수정·삭제
+
+Naver Blog Search와 Kakao Local 검색·저장
+
+방문자 기록과 관리자 통계
+
+요리 기록 게시판은 팀원과 공동으로 구현했습니다.
+
+팀원은 레시피 게시판의 주요 CRUD와 파일 처리, Naver Shopping, 장바구니·구매내역, 요리 기록 좋아요, Gemini 연동을 맡았습니다.
 
 ## 기술 스택
 
@@ -88,6 +93,8 @@ Admin pages ───► member / recipe / visit / order aggregate queries
 `src/main/java/com/cooking/star` 아래 도메인별 패키지를 두고 DTO, Controller, Service, Mapper를 분리했습니다. JSP는 서버 렌더링을 담당하고, 좋아요·팔로우·장바구니 수량 같은 즉시 반영이 필요한 기능은 Ajax로 처리합니다.
 
 ## 주요 기능
+
+아래는 팀 전체 구현 범위입니다. 개인 담당 범위는 위의 역할 분담을 기준으로 구분했습니다.
 
 ### 회원 · 인증 · 인가
 
@@ -183,6 +190,8 @@ WHERE "COMMENT_NUM" = #{commentNum}
 
 ## 외부 API 연동
 
+외부 API 중 Naver Blog Search와 Kakao Local은 제가 담당했고, Naver Shopping과 장바구니 연결은 팀원이 담당했습니다.
+
 외부 API 호출은 `RestTemplate`과 서비스 계층에서 수행합니다.
 
 | API | 사용처 | 구현 흐름 |
@@ -191,7 +200,7 @@ WHERE "COMMENT_NUM" = #{commentNum}
 | Naver Shopping | 재료·상품 검색 | JSON `items` 파싱 → `CartDTO` 변환 → 장바구니 |
 | Kakao Local | 주변 맛집 검색 | 카테고리·페이지 조건 → `SpotDTO` 변환 → 저장 여부 표시 |
 
-API 키는 코드에 하드코딩하지 않고 `@Value`로 외부 설정에서 주입하도록 구성했습니다. 다만 현재 `RestTemplate` 호출에는 명시적인 timeout/retry 정책이 없어 외부 장애가 요청 지연으로 이어질 수 있습니다.
+제가 담당한 Naver Blog·Kakao Local API 키는 코드에 하드코딩하지 않고 @Value로 외부 설정에서 주입했습니다.
 
 ## 프로젝트 구조
 
